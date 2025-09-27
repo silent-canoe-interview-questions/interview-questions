@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Practices - Learn Microsoft SQL Server</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">SQL Tutorial</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="basics.html">Basics</a></li>
+                    <li class="nav-item"><a class="nav-link" href="data-manipulation.html">Data Manipulation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="advanced-topics.html">Advanced Topics</a></li>
+                    <li class="nav-item"><a class="nav-link" href="examples.html">Examples</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="best-practices.html">Best Practices</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-5 pt-4">
+        <h1 class="mb-4">SQL Server Best Practices</h1>
+
+        <section id="query-optimization" class="mb-5">
+            <h2>Query Optimization</h2>
+            
+            <h3>Understanding Execution Plans</h3>
+            <p>Execution plans show how SQL Server executes your queries. Understanding them is crucial for optimization.</p>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4>How to View Execution Plans</h4>
+                    <pre><code class="language-sql">-- Enable actual execution plan (Ctrl + M)
+-- or use this query
+SET STATISTICS XML ON;
+GO
+
+SELECT * FROM Products WHERE Price > 100;
+GO
+
+SET STATISTICS XML OFF;
+GO</code></pre>
+
+                    <h4>Common Plan Operators</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Operator</th>
+                                    <th>Description</th>
+                                    <th>Performance Impact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Table Scan</td>
+                                    <td>Reads all rows in a table</td>
+                                    <td>High cost for large tables</td>
+                                </tr>
+                                <tr>
+                                    <td>Index Seek</td>
+                                    <td>Uses index to find specific rows</td>
+                                    <td>Generally efficient</td>
+                                </tr>
+                                <tr>
+                                    <td>Hash Match</td>
+                                    <td>Builds hash table for joins</td>
+                                    <td>Memory intensive</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Index Optimization</h3>
+            <pre><code class="language-sql">-- Check index usage statistics
+SELECT 
+    OBJECT_NAME(i.object_id) as TableName,
+    i.name as IndexName,
+    ius.user_seeks,
+    ius.user_scans,
+    ius.user_lookups,
+    ius.user_updates
+FROM sys.indexes i
+LEFT JOIN sys.dm_db_index_usage_stats ius 
+    ON i.object_id = ius.object_id 
+    AND i.index_id = ius.index_id
+WHERE OBJECT_NAME(i.object_id) = 'YourTableName';</code></pre>
+
+            <div class="alert alert-info">
+                <h4>Index Design Guidelines</h4>
+                <ul>
+                    <li>Create indexes on frequently used WHERE clause columns</li>
+                    <li>Include commonly selected columns in covering indexes</li>
+                    <li>Consider the balance between read and write operations</li>
+                    <li>Regularly monitor and maintain indexes</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="security" class="mb-5">
+            <h2>Security Best Practices</h2>
+
+            <h3>Authentication and Authorization</h3>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4>Implementing Least Privilege Access</h4>
+                    <pre><code class="language-sql">-- Create a role for read-only access
+CREATE ROLE ReadOnlyRole;
+GO
+
+-- Grant SELECT permissions to the role
+GRANT SELECT ON Schema::dbo TO ReadOnlyRole;
+GO
+
+-- Create a user and add to role
+CREATE USER ReadOnlyUser WITHOUT LOGIN;
+GO
+ALTER ROLE ReadOnlyRole ADD MEMBER ReadOnlyUser;
+GO</code></pre>
+
+                    <h4>Security Checklist</h4>
+                    <ul>
+                        <li>Use Windows Authentication when possible</li>
+                        <li>Implement role-based access control</li>
+                        <li>Regularly audit login attempts and permissions</li>
+                        <li>Encrypt sensitive data</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Preventing SQL Injection</h3>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4>Bad Practice (Vulnerable to SQL Injection)</h4>
+                    <pre><code class="language-sql">-- DON'T DO THIS
+DECLARE @sql NVARCHAR(MAX);
+SET @sql = 'SELECT * FROM Users WHERE Username = ''' + @UserInput + '''';
+EXEC(@sql);</code></pre>
+
+                    <h4>Good Practice (Parameterized Queries)</h4>
+                    <pre><code class="language-sql">-- DO THIS
+DECLARE @sql NVARCHAR(MAX);
+DECLARE @params NVARCHAR(MAX);
+
+SET @sql = N'SELECT * FROM Users WHERE Username = @Username';
+SET @params = N'@Username NVARCHAR(50)';
+
+EXEC sp_executesql @sql, @params, @Username = @UserInput;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="coding-standards" class="mb-5">
+            <h2>SQL Coding Standards</h2>
+
+            <h3>Naming Conventions</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Object Type</th>
+                            <th>Convention</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tables</td>
+                            <td>Plural nouns, PascalCase</td>
+                            <td>Customers, OrderDetails</td>
+                        </tr>
+                        <tr>
+                            <td>Columns</td>
+                            <td>PascalCase, descriptive</td>
+                            <td>FirstName, LastOrderDate</td>
+                        </tr>
+                        <tr>
+                            <td>Stored Procedures</td>
+                            <td>sp_[Action][Entity]</td>
+                            <td>sp_GetCustomerOrders</td>
+                        </tr>
+                        <tr>
+                            <td>Indexes</td>
+                            <td>IX_[Table]_[Columns]</td>
+                            <td>IX_Orders_CustomerID</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Code Formatting</h3>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4>Good Formatting Example</h4>
+                    <pre><code class="language-sql">SELECT 
+    c.CustomerID,
+    c.FirstName,
+    c.LastName,
+    COUNT(o.OrderID) as TotalOrders,
+    SUM(od.Quantity * od.UnitPrice) as TotalSpent
+FROM 
+    Customers c
+    INNER JOIN Orders o 
+        ON c.CustomerID = o.CustomerID
+    INNER JOIN OrderDetails od 
+        ON o.OrderID = od.OrderID
+WHERE 
+    o.OrderDate >= DATEADD(YEAR, -1, GETDATE())
+    AND c.Status = 'Active'
+GROUP BY 
+    c.CustomerID,
+    c.FirstName,
+    c.LastName
+HAVING 
+    COUNT(o.OrderID) > 10
+ORDER BY 
+    TotalSpent DESC;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="performance" class="mb-5">
+            <h2>Performance Optimization</h2>
+
+            <h3>Common Performance Issues and Solutions</h3>
+            <div class="accordion" id="performanceAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                            1. Inefficient WHERE Clauses
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#performanceAccordion">
+                        <div class="accordion-body">
+                            <h4>Problem:</h4>
+                            <pre><code class="language-sql">-- Bad practice
+SELECT * FROM Orders 
+WHERE YEAR(OrderDate) = 2025;</code></pre>
+
+                            <h4>Solution:</h4>
+                            <pre><code class="language-sql">-- Good practice
+SELECT * FROM Orders 
+WHERE OrderDate >= '2025-01-01' 
+AND OrderDate < '2026-01-01';</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                            2. Improper JOIN Usage
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#performanceAccordion">
+                        <div class="accordion-body">
+                            <h4>Problem:</h4>
+                            <pre><code class="language-sql">-- Bad practice (cartesian product)
+SELECT * FROM Orders, OrderDetails;</code></pre>
+
+                            <h4>Solution:</h4>
+                            <pre><code class="language-sql">-- Good practice
+SELECT * FROM Orders o
+INNER JOIN OrderDetails od 
+    ON o.OrderID = od.OrderID;</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="maintenance" class="mb-5">
+            <h2>Database Maintenance</h2>
+
+            <h3>Regular Maintenance Tasks</h3>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4>Index Maintenance</h4>
+                    <pre><code class="language-sql">-- Rebuild all indexes
+ALTER INDEX ALL ON TableName REBUILD;
+
+-- Update statistics
+UPDATE STATISTICS TableName WITH FULLSCAN;</code></pre>
+
+                    <h4>Backup Strategy</h4>
+                    <pre><code class="language-sql">-- Full backup
+BACKUP DATABASE YourDatabase 
+TO DISK = 'C:\Backup\YourDatabase.bak'
+WITH INIT;
+
+-- Transaction log backup
+BACKUP LOG YourDatabase 
+TO DISK = 'C:\Backup\YourDatabase_Log.trn';</code></pre>
+
+                    <div class="alert alert-warning">
+                        <h5>Maintenance Checklist</h5>
+                        <ul>
+                            <li>Schedule regular backups</li>
+                            <li>Monitor database growth</li>
+                            <li>Check for index fragmentation</li>
+                            <li>Review and update statistics</li>
+                            <li>Monitor transaction log size</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="navigation-buttons d-flex justify-content-between mt-5">
+            <a href="examples.html" class="btn btn-secondary">&larr; Previous: Examples</a>
+            <a href="../index.html" class="btn btn-primary">Back to Home</a>
+        </div>
+    </main>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>© 2025 SQL Tutorial. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-sql.min.js"></script>
+    <script src="../scripts/main.js"></script>
+</body>
+</html>

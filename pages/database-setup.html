@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Setup - HR Database Tutorial</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">HR Database SQL Tutorial</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="database-setup.html">Database Setup</a></li>
+                    <li class="nav-item"><a class="nav-link" href="basic-queries.html">Basic Queries</a></li>
+                    <li class="nav-item"><a class="nav-link" href="data-manipulation.html">Data Management</a></li>
+                    <li class="nav-item"><a class="nav-link" href="advanced-hr.html">Advanced HR Queries</a></li>
+                    <li class="nav-item"><a class="nav-link" href="reporting.html">HR Reporting</a></li>
+                    <li class="nav-item"><a class="nav-link" href="best-practices.html">Best Practices</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-5 pt-4">
+        <h1 class="mb-4">HR Database Setup</h1>
+
+        <section id="database-overview" class="mb-5">
+            <h2>Database Overview</h2>
+            <p>Our HR database is designed to manage a complete employee management system with the following features:</p>
+            <ul>
+                <li>Employee personal and professional information</li>
+                <li>Department and location management</li>
+                <li>Job history and career progression</li>
+                <li>Salary and compensation tracking</li>
+                <li>Performance reviews and skills</li>
+                <li>Training and certification records</li>
+            </ul>
+        </section>
+
+        <section id="database-schema" class="mb-5">
+            <h2>Database Schema</h2>
+            
+            <h3>Core Tables</h3>
+            <pre><code class="language-sql">-- Create the HR database
+CREATE DATABASE HRDatabase;
+GO
+
+USE HRDatabase;
+GO
+
+-- Departments table
+CREATE TABLE Departments (
+    DepartmentID INT PRIMARY KEY IDENTITY(1,1),
+    DepartmentName VARCHAR(50) NOT NULL,
+    LocationID INT,
+    ManagerID INT,
+    Budget DECIMAL(15,2),
+    CreatedDate DATETIME DEFAULT GETDATE()
+);
+
+-- Locations table
+CREATE TABLE Locations (
+    LocationID INT PRIMARY KEY IDENTITY(1,1),
+    City VARCHAR(50),
+    State VARCHAR(50),
+    Country VARCHAR(50),
+    PostalCode VARCHAR(20),
+    CreatedDate DATETIME DEFAULT GETDATE()
+);
+
+-- Jobs table
+CREATE TABLE Jobs (
+    JobID INT PRIMARY KEY IDENTITY(1,1),
+    JobTitle VARCHAR(100) NOT NULL,
+    MinSalary DECIMAL(10,2),
+    MaxSalary DECIMAL(10,2),
+    CreatedDate DATETIME DEFAULT GETDATE()
+);
+
+-- Employees table
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY IDENTITY(1,1),
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) UNIQUE,
+    PhoneNumber VARCHAR(20),
+    HireDate DATE NOT NULL,
+    JobID INT FOREIGN KEY REFERENCES Jobs(JobID),
+    Salary DECIMAL(10,2),
+    CommissionPct DECIMAL(4,2),
+    ManagerID INT,
+    DepartmentID INT FOREIGN KEY REFERENCES Departments(DepartmentID),
+    CreatedDate DATETIME DEFAULT GETDATE()
+);</code></pre>
+
+            <h3>Supporting Tables</h3>
+            <pre><code class="language-sql">-- Job History table
+CREATE TABLE JobHistory (
+    HistoryID INT PRIMARY KEY IDENTITY(1,1),
+    EmployeeID INT FOREIGN KEY REFERENCES Employees(EmployeeID),
+    StartDate DATE,
+    EndDate DATE,
+    JobID INT FOREIGN KEY REFERENCES Jobs(JobID),
+    DepartmentID INT FOREIGN KEY REFERENCES Departments(DepartmentID),
+    CreatedDate DATETIME DEFAULT GETDATE()
+);
+
+-- Skills table
+CREATE TABLE Skills (
+    SkillID INT PRIMARY KEY IDENTITY(1,1),
+    SkillName VARCHAR(50) NOT NULL,
+    Description VARCHAR(200),
+    CreatedDate DATETIME DEFAULT GETDATE()
+);
+
+-- Employee Skills table
+CREATE TABLE EmployeeSkills (
+    EmployeeID INT FOREIGN KEY REFERENCES Employees(EmployeeID),
+    SkillID INT FOREIGN KEY REFERENCES Skills(SkillID),
+    ProficiencyLevel INT CHECK (ProficiencyLevel BETWEEN 1 AND 5),
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    PRIMARY KEY (EmployeeID, SkillID)
+);
+
+-- Performance Reviews table
+CREATE TABLE PerformanceReviews (
+    ReviewID INT PRIMARY KEY IDENTITY(1,1),
+    EmployeeID INT FOREIGN KEY REFERENCES Employees(EmployeeID),
+    ReviewDate DATE,
+    Rating INT CHECK (Rating BETWEEN 1 AND 5),
+    Comments VARCHAR(MAX),
+    ReviewerID INT FOREIGN KEY REFERENCES Employees(EmployeeID),
+    CreatedDate DATETIME DEFAULT GETDATE()
+);
+
+-- Training Programs table
+CREATE TABLE TrainingPrograms (
+    ProgramID INT PRIMARY KEY IDENTITY(1,1),
+    ProgramName VARCHAR(100) NOT NULL,
+    Description VARCHAR(MAX),
+    Duration INT, -- in hours
+    CreatedDate DATETIME DEFAULT GETDATE()
+);
+
+-- Employee Training table
+CREATE TABLE EmployeeTraining (
+    EmployeeID INT FOREIGN KEY REFERENCES Employees(EmployeeID),
+    ProgramID INT FOREIGN KEY REFERENCES TrainingPrograms(ProgramID),
+    CompletionDate DATE,
+    Status VARCHAR(20),
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    PRIMARY KEY (EmployeeID, ProgramID)
+);</code></pre>
+
+            <h3>Additional Indexes</h3>
+            <pre><code class="language-sql">-- Create indexes for better query performance
+CREATE INDEX IX_Employees_Department 
+ON Employees(DepartmentID);
+
+CREATE INDEX IX_Employees_Job 
+ON Employees(JobID);
+
+CREATE INDEX IX_JobHistory_Employee 
+ON JobHistory(EmployeeID);
+
+CREATE INDEX IX_PerformanceReviews_Employee 
+ON PerformanceReviews(EmployeeID);
+
+CREATE INDEX IX_EmployeeSkills_Skill 
+ON EmployeeSkills(SkillID);
+
+CREATE INDEX IX_EmployeeTraining_Program 
+ON EmployeeTraining(ProgramID);</code></pre>
+        </section>
+
+        <section id="relationships" class="mb-5">
+            <h2>Table Relationships</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Primary Table</th>
+                            <th>Related Table</th>
+                            <th>Relationship</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Departments</td>
+                            <td>Employees</td>
+                            <td>One-to-Many</td>
+                            <td>One department can have many employees</td>
+                        </tr>
+                        <tr>
+                            <td>Jobs</td>
+                            <td>Employees</td>
+                            <td>One-to-Many</td>
+                            <td>One job title can be held by many employees</td>
+                        </tr>
+                        <tr>
+                            <td>Employees</td>
+                            <td>JobHistory</td>
+                            <td>One-to-Many</td>
+                            <td>One employee can have multiple job history records</td>
+                        </tr>
+                        <tr>
+                            <td>Skills</td>
+                            <td>EmployeeSkills</td>
+                            <td>Many-to-Many</td>
+                            <td>Employees can have multiple skills, and skills can belong to multiple employees</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="sample-data" class="mb-5">
+            <h2>Sample Data Population</h2>
+            <p>In the next section, we'll populate these tables with realistic sample data that we'll use throughout the tutorial.</p>
+            <a href="sample-data.html" class="btn btn-primary">Continue to Sample Data Population →</a>
+        </section>
+
+        <div class="navigation-buttons d-flex justify-content-between mt-5">
+            <a href="../index.html" class="btn btn-secondary">&larr; Back to Home</a>
+            <a href="sample-data.html" class="btn btn-primary">Next: Sample Data Population &rarr;</a>
+        </div>
+    </main>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>© 2025 HR Database SQL Tutorial. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-sql.min.js"></script>
+    <script src="../scripts/main.js"></script>
+</body>
+</html>

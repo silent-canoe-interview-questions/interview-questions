@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Live SQL Query Optimization Exercises</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: linear-gradient(135deg, #ff6a00, #ee0979);
+      color: white;
+      text-align: center;
+      padding: 25px 20px;
+      font-size: 2em;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .container {
+      width: 90%;
+      max-width: 950px;
+      margin: 30px auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 25px 30px;
+    }
+    ol {
+      line-height: 1.8;
+      padding-left: 20px;
+    }
+    li {
+      margin: 15px 0;
+      padding: 12px;
+      background: #fff0f5;
+      border-left: 4px solid #ff6a00;
+      border-radius: 5px;
+      transition: background 0.2s;
+    }
+    li:hover {
+      background: #ffe6f0;
+    }
+    code {
+      display: block;
+      background: #f4f4f4;
+      padding: 6px 10px;
+      border-radius: 4px;
+      margin-top: 5px;
+      font-family: Consolas, monospace;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  Live SQL Query Optimization Exercises
+</header>
+
+<div class="container">
+  <ol>
+    <li>
+      Optimize a query using SELECT * on a large table:
+      <code>SELECT * FROM Employees;</code>
+    </li>
+    <li>
+      Optimize a query with a function in WHERE clause:
+      <code>SELECT * FROM Orders WHERE YEAR(OrderDate) = 2024;</code>
+    </li>
+    <li>
+      Optimize a correlated subquery fetching top salaries:
+      <code>
+        SELECT e1.Name, e1.Salary
+        FROM Employees e1
+        WHERE e1.Salary = (SELECT MAX(e2.Salary) FROM Employees e2 WHERE e2.DeptId = e1.DeptId);
+      </code>
+    </li>
+    <li>
+      Optimize a query using multiple OR conditions:
+      <code>
+        SELECT * FROM Employees
+        WHERE DeptId = 1 OR DeptId = 2 OR DeptId = 3;
+      </code>
+    </li>
+    <li>
+      Optimize a query using IN clause on a large table:
+      <code>
+        SELECT * FROM Orders
+        WHERE CustomerId IN (SELECT CustomerId FROM Customers WHERE Country = 'USA');
+      </code>
+    </li>
+    <li>
+      Rewrite LEFT JOIN when INNER JOIN suffices:
+      <code>
+        SELECT e.Name, d.DeptName
+        FROM Employees e
+        LEFT JOIN Departments d ON e.DeptId = d.DeptId
+        WHERE d.DeptName = 'IT';
+      </code>
+    </li>
+    <li>
+      Optimize a query with ORDER BY on non-indexed column:
+      <code>
+        SELECT * FROM Employees ORDER BY LastName;
+      </code>
+    </li>
+    <li>
+      Optimize a query with SELECT DISTINCT and JOIN:
+      <code>
+        SELECT DISTINCT e.Name
+        FROM Employees e
+        JOIN Orders o ON e.EmployeeId = o.EmployeeId;
+      </code>
+    </li>
+    <li>
+      Optimize a query with nested subqueries:
+      <code>
+        SELECT Name
+        FROM Employees
+        WHERE EmployeeId IN (
+            SELECT EmployeeId
+            FROM Orders
+            WHERE OrderId IN (
+                SELECT OrderId FROM OrderDetails WHERE Quantity > 10
+            )
+        );
+      </code>
+    </li>
+    <li>
+      Optimize a query with LIKE '%pattern%':
+      <code>
+        SELECT * FROM Products WHERE ProductName LIKE '%Choco%';
+      </code>
+    </li>
+    <li>
+      Optimize a query calculating aggregates repeatedly:
+      <code>
+        SELECT e.Name,
+               (SELECT AVG(Salary) FROM Employees WHERE DeptId = e.DeptId) AS DeptAvgSalary
+        FROM Employees e;
+      </code>
+    </li>
+    <li>
+      Optimize query with ORDER BY RAND():
+      <code>
+        SELECT * FROM Employees ORDER BY RAND() LIMIT 10;
+      </code>
+    </li>
+    <li>
+      Optimize query using NOT IN on large table:
+      <code>
+        SELECT * FROM Employees
+        WHERE EmployeeId NOT IN (SELECT EmployeeId FROM Managers);
+      </code>
+    </li>
+    <li>
+      Optimize query with heavy GROUP BY:
+      <code>
+        SELECT DeptId, COUNT(*)
+        FROM Employees
+        GROUP BY DeptId
+        HAVING COUNT(*) > 10;
+      </code>
+    </li>
+    <li>
+      Optimize query with multiple joins and redundant columns:
+      <code>
+        SELECT e.*, d.*, o.*
+        FROM Employees e
+        JOIN Departments d ON e.DeptId = d.DeptId
+        JOIN Orders o ON e.EmployeeId = o.EmployeeId;
+      </code>
+    </li>
+    <li>
+      Optimize query fetching latest record per group:
+      <code>
+        SELECT * FROM Employees e
+        WHERE e.JoinDate = (
+          SELECT MAX(JoinDate)
+          FROM Employees
+          WHERE DeptId = e.DeptId
+        );
+      </code>
+    </li>
+    <li>
+      Optimize query with multiple LIKE clauses:
+      <code>
+        SELECT * FROM Products
+        WHERE ProductName LIKE '%Choco%' OR ProductName LIKE '%Candy%';
+      </code>
+    </li>
+    <li>
+      Optimize query using functions on indexed columns:
+      <code>
+        SELECT * FROM Orders
+        WHERE DATE(OrderDate) = '2025-01-01';
+      </code>
+    </li>
+    <li>
+      Optimize query using OR in WHERE for multiple ranges:
+      <code>
+        SELECT * FROM Orders
+        WHERE OrderDate BETWEEN '2025-01-01' AND '2025-01-31'
+        OR OrderDate BETWEEN '2025-02-01' AND '2025-02-28';
+      </code>
+    </li>
+    <li>
+      Optimize query with repeated joins:
+      <code>
+        SELECT e.Name, d1.DeptName, d2.DeptName
+        FROM Employees e
+        JOIN Departments d1 ON e.DeptId = d1.DeptId
+        JOIN Departments d2 ON e.ManagerDeptId = d2.DeptId;
+      </code>
+    </li>
+    <li>
+      Optimize query using heavy subquery in SELECT:
+      <code>
+        SELECT e.Name,
+          (SELECT COUNT(*) FROM Orders o WHERE o.EmployeeId = e.EmployeeId) AS OrderCount
+        FROM Employees e;
+      </code>
+    </li>
+    <li>
+      Optimize query with redundant sorting:
+      <code>
+        SELECT * FROM Employees ORDER BY DeptId, DeptId;
+      </code>
+    </li>
+    <li>
+      Optimize query fetching data from JSON column:
+      <code>
+        SELECT * FROM Orders WHERE JSON_EXTRACT(OrderDetails, '$.ProductId') = 101;
+      </code>
+    </li>
+    <li>
+      Optimize query using multiple nested EXISTS:
+      <code>
+        SELECT Name FROM Employees e
+        WHERE EXISTS (SELECT 1 FROM Orders o WHERE o.EmployeeId = e.EmployeeId
+                      AND EXISTS (SELECT 1 FROM OrderDetails od WHERE od.OrderId = o.OrderId AND od.Quantity > 10));
+      </code>
+    </li>
+    <li>
+      Optimize query with UNION on large tables:
+      <code>
+        SELECT Name FROM Employees WHERE DeptId = 1
+        UNION
+        SELECT Name FROM Employees WHERE DeptId = 2;
+      </code>
+    </li>
+    <li>
+      Optimize query using LEFT JOIN but filtering on right table:
+      <code>
+        SELECT e.Name, d.DeptName
+        FROM Employees e
+        LEFT JOIN Departments d ON e.DeptId = d.DeptId
+        WHERE d.DeptName = 'HR';
+      </code>
+    </li>
+  </ol>
+</div>
+
+<footer>
+  &copy; 2025 Live SQL Query Optimization Exercises with Queries
+</footer>
+
+</body>
+</html>

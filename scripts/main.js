@@ -37,9 +37,20 @@ async function loadNavigation() {
             const interviewList = document.createElement('ul');
             interviewList.className = 'interview-submenu';
             
-            const basicQuestions = createMenuItem('Basic Questions', `pages/${topic}/interview-questions/basic-questions.html`);
-            interviewList.appendChild(basicQuestions);
-            
+            const links = [
+            { name: "SQL-Questions", file: "questions.html" },
+            { name: "SQL-Questions-Answers", file: "questions-answers.html" }
+            ];
+
+            links.forEach(link => {
+            const item = createMenuItem(
+                link.name, 
+                `pages/${topic}/interview-questions/${link.file}`
+            );
+            interviewList.appendChild(item);
+            });
+
+                        
             interviewSection.appendChild(interviewList);
             submenu.appendChild(interviewSection);
             

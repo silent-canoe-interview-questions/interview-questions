@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>SQL Basics & Interview Prep — Friendly Guide (HTML)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#92a1b8; --accent:#7dd3fc;
+      --accent-2:#a78bfa; --glass:rgba(255,255,255,0.03); --code:#071226;
+      --good:#10b981; --danger:#ef4444;
+    }
+    body{
+      margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,#071022 0%, #081028 35%, #071022 100%);
+      color:#e6eef8; line-height:1.45; padding:32px;
+    }
+    header{display:flex;gap:16px;align-items:center;margin-bottom:20px;}
+    .logo{width:72px;height:72px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#04263b;font-size:20px;box-shadow:0 6px 30px rgba(124,58,237,0.15);}
+    h1{margin:0;font-size:26px}
+    p.lead{margin:4px 0 0;color:var(--muted)}
+    nav{margin:18px 0;display:flex;flex-wrap:wrap;gap:8px}
+    a.toc{
+      background:var(--glass); padding:8px 12px; border-radius:8px; color:var(--accent); text-decoration:none; font-size:13px;
+      border:1px solid rgba(125,211,252,0.06)
+    }
+    main{display:grid;grid-template-columns:360px 1fr; gap:20px}
+    aside{position:sticky;top:24px;height:calc(100vh - 80px);overflow:auto;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    section.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:22px;border-radius:12px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.03)}
+    h2{margin-top:0;color:var(--accent-2)}
+    .q{display:flex;gap:12px;align-items:flex-start}
+    .qnum{min-width:46px;background:#081428;padding:8px 10px;border-radius:8px;color:var(--accent);font-weight:700}
+    pre{background:linear-gradient(180deg,#0b1220,#071022); padding:14px;border-radius:10px; overflow:auto;border:1px solid rgba(255,255,255,0.03); color:#c9e7ff}
+    code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace; font-size:13px}
+    .explain{color:var(--muted);margin:8px 0 14px}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);font-size:13px;color:var(--accent)}
+    .good{color:var(--good)} .bad{color:var(--danger)}
+    table {width:100%;border-collapse:collapse;margin:10px 0}
+    th,td{padding:8px 10px;border-bottom:1px dashed rgba(255,255,255,0.03);text-align:left;font-size:14px}
+    .grid{display:grid;grid-template-columns:1fr 1fr; gap:12px}
+    details{background:rgba(255,255,255,0.01); padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)}
+    footer{margin-top:20px;color:var(--muted);font-size:13px}
+    .accent-box{padding:10px;border-radius:10px;background:linear-gradient(90deg,rgba(125,211,252,0.05),rgba(167,139,250,0.03));border:1px solid rgba(125,211,252,0.06); color:var(--muted)}
+    .code-title{font-size:13px;color:var(--muted);margin-bottom:6px}
+    .big-code{font-size:13px;line-height:1.4}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">SQL</div>
+    <div>
+      <h1>SQL Interview Prep — Simple explanations & ready-to-run examples</h1>
+      <p class="lead">HTML page designed for freshers — copy to GitHub Pages. Answers + code + short examples for each question (1–70).</p>
+    </div>
+  </header>
+
+  <nav>
+    <!-- small quick-links -->
+    <a class="toc" href="#norm">Normalization</a>
+    <a class="toc" href="#keys">Keys & Constraints</a>
+    <a class="toc" href="#indexes">Indexes</a>
+    <a class="toc" href="#views">Views/Procs/Triggers</a>
+    <a class="toc" href="#transactions">Transactions & ACID</a>
+    <a class="toc" href="#joins">Joins/Subqueries</a>
+    <a class="toc" href="#dw">Data Warehouse</a>
+    <a class="toc" href="#advanced">Advanced SQL & Window</a>
+    <a class="toc" href="#queries">Practical Queries (51-70)</a>
+  </nav>
+
+  <main>
+    <aside>
+      <section class="card">
+        <h3>Sample schema used in examples</h3>
+        <p class="explain">A small company schema used for query examples below. You can paste this into SQL Server / MySQL / PostgreSQL with small tweaks.</p>
+        <pre><code class="big-code">
+-- Employee & Department sample schema
+CREATE TABLE Department (
+  DeptID INT PRIMARY KEY,
+  DeptName VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Employee (
+  EmpID INT PRIMARY KEY,
+  EmpName VARCHAR(100) NOT NULL,
+  ManagerID INT NULL,           -- FK to Employee.EmpID
+  DeptID INT NULL,              -- FK to Department.DeptID
+  Salary DECIMAL(12,2) NOT NULL,
+  HireDate DATE,
+  LastBonusDate DATE,
+  PerformanceRating CHAR(1),    -- e.g. 'A','B','C'
+  TrainingsCompleted INT DEFAULT 0,
+  HasCertification BIT DEFAULT 0,
+  HasDegree BIT DEFAULT 0,
+  DisciplinaryFlag BIT DEFAULT 0,
+  CONSTRAINT FK_Employee_Manager FOREIGN KEY (ManagerID) REFERENCES Employee(EmpID),
+  CONSTRAINT FK_Employee_Dept FOREIGN KEY (DeptID) REFERENCES Department(DeptID)
+);
+        </code></pre>
+        <p class="explain"><span class="pill">Tip</span> For MySQL change BIT to TINYINT(1); for Postgres use BOOLEAN types.</p>
+      </section>
+
+      <section class="card">
+        <h3>How to use this page</h3>
+        <ul style="color:var(--muted);padding-left:16px">
+          <li>Click any question in the main content to jump to it.</li>
+          <li>Code blocks are generic SQL — adjust types / limits for your RDBMS.</li>
+          <li>Use the sample schema in this sidebar to test the queries quickly.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h3>Quick glossary</h3>
+        <p class="explain"><strong>PK</strong> = Primary Key, <strong>FK</strong> = Foreign Key, <strong>DDL</strong> = Data Definition Language (CREATE/TABLE), <strong>DML</strong> = Data Manipulation (SELECT/INSERT).</p>
+      </section>
+    </aside>
+
+    <div>
+      <!-- CONTENT: answer each question numbered, with concise simple language and examples -->
+      <section id="norm" class="card">
+        <div class="q"><div class="qnum">1</div><div>
+          <h2>What is normalization in SQL?</h2>
+          <p class="explain">Normalization is the process of organizing database tables to reduce duplicate data and make data modifications predictable and efficient. In simple words: split data into logical tables so each fact is stored once.</p>
+          <pre><code>Example: Instead of storing DeptName in every employee row, put departments in a Department table and reference by DeptID.</code></pre>
+        </div></div>
+      </section>
+
+      <section class="card">
+        <div class="q"><div class="qnum">2</div><div>
+          <h2>Types of normalization and their differences — why important?</h2>
+          <p class="explain">Common normal forms (simple language + goal):</p>
+          <table>
+            <thead><tr><th>Normal Form</th><th>What it enforces</th><th>Why it matters (simple)</th></tr></thead>
+            <tbody>
+              <tr><td>1NF (First)</td><td>Cells are atomic (no lists in one column).</td><td>Makes queries predictable.</td></tr>
+              <tr><td>2NF (Second)</td><td>No partial dependency on a composite PK.</td><td>Removes redundancy when table has composite key.</td></tr>
+              <tr><td>3NF (Third)</td><td>No transitive dependency (non-PK columns depend only on PK).</td><td>Avoids duplicate/update anomalies.</td></tr>
+              <tr><td>BCNF</td><td>Stronger than 3NF for certain key problems.</td><td>Handles complex key situations.</td></tr>
+              <tr><td>4NF,5NF</td><td>Handle multi-valued dependencies and join decompositions.</td><td>Used rarely — for advanced modelling.</td></tr>
+            </tbody>
+          </table>
+          <p class="explain">In short: normalization makes data consistent, smaller, and easier to maintain. Trade-off: more joins when reading.</p>
+        </div></div>
+      </section>
+
+      <section class="card">
+        <div class="q"><div class="qnum">3</div><div>
+          <h2>What will happen if normalization is not done?</h2>
+          <p class="explain">Problems you'll face:</p>
+          <ul style="color:var(--muted)">
+            <li>Data redundancy — repeated values waste space.</li>
+            <li>Update anomalies — changing a value needs many updates and may fail in places.</li>
+            <li>Insert/Delete anomalies — can't insert or delete without side effects.</li>
+            <li>Hard to enforce consistency (eg. department name spelled differently).</li>
+          </ul>
+        </div></div>
+      </section>
+
+      <section class="card">
+        <div class="q"><div class="qnum">4</div><div>
+          <h2>What is denormalization in SQL?</h2>
+          <p class="explain">Denormalization is intentionally adding redundancy (storing computed or repeated data) to speed up reads. Use when read performance matters more than strict storage efficiency.</p>
+          <pre><code>Example: store DeptName in Employee for faster reporting (avoids JOIN), but must keep it synchronized.</code></pre>
+        </div></div>
+      </section>
+
+      <section id="keys" class="card">
+        <h2>Keys & Constraints (Questions 5–10)</h2>
+
+        <div class="q"><div class="qnum">5</div><div>
+          <h3>Primary key & Foreign key — what, why, counts, example</h3>
+          <p class="explain"><strong>Primary Key (PK)</strong>: unique identifier for each row in a table. Important because it uniquely identifies rows and helps indexing.</p>
+          <p class="explain"><strong>Foreign Key (FK)</strong>: a column that points to a PK in another table to enforce relationships (referential integrity).</p>
+          <p><strong>How many?</strong> One primary key per table (it may be composite), and multiple foreign keys allowed (any number referencing other tables).</p>
+          <pre><code>Example:
+-- Dept table
+CREATE TABLE Department(DeptID INT PRIMARY KEY, DeptName VARCHAR(100));
+
+-- Employee table with FK to Department
+CREATE TABLE Employee(
+  EmpID INT PRIMARY KEY,
+  EmpName VARCHAR(100),
+  DeptID INT,
+  CONSTRAINT FK_Emp_Dept FOREIGN KEY (DeptID) REFERENCES Department(DeptID)
+);</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">6</div><div>
+          <h3>Unique key — what, difference from PK, counts, example</h3>
+          <p class="explain">A <strong>UNIQUE</strong> constraint enforces that values in a column (or set of columns) are distinct. Differences from PK:</p>
+          <ul style="color:var(--muted)">
+            <li>Table can have multiple UNIQUE constraints but only one PK.</li>
+            <li>PK cannot be NULL (in most RDBMS), UNIQUE columns can be NULL (behavior varies by DB).</li>
+            <li>PK is the main identifier; UNIQUE is for alternate keys (like email).</li>
+          </ul>
+          <pre><code>Example:
+CREATE TABLE Employee(
+  EmpID INT PRIMARY KEY,
+  EmpEmail VARCHAR(200) UNIQUE, -- at most one person can have same email
+  EmpName VARCHAR(100)
+);</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">7</div><div>
+          <h3>NOT NULL constraint — what, importance, counts, example</h3>
+          <p class="explain">NOT NULL forces a column to always have a value (no NULL allowed). Important to ensure required data exists.</p>
+          <p class="explain">How many? You can have as many NOT NULL columns as you want — it's a property per column.</p>
+          <pre><code>Example:
+CREATE TABLE Employee(
+  EmpID INT PRIMARY KEY,
+  EmpName VARCHAR(100) NOT NULL,  -- always must have a name
+  Salary DECIMAL(12,2) NOT NULL
+);</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">8</div><div>
+          <h3>Check constraint — what, importance, counts, example</h3>
+          <p class="explain">CHECK enforces a condition on values in a column. It keeps data valid (business rules).</p>
+          <p class="explain">You can have many CHECK constraints (one per column or multiple combined).</p>
+          <pre><code>Example:
+CREATE TABLE Employee(
+  EmpID INT PRIMARY KEY,
+  Salary DECIMAL(12,2),
+  CONSTRAINT CHK_Salary_Positive CHECK (Salary &gt;= 0)
+);</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">9</div><div>
+          <h3>Default constraint — what, importance, counts, example</h3>
+          <p class="explain">DEFAULT assigns a value automatically when none is provided (helps avoid NULLs and reduce client code).</p>
+          <p class="explain">You may have many DEFAULTs (per column).</p>
+          <pre><code>Example:
+CREATE TABLE Employee(
+  EmpID INT PRIMARY KEY,
+  TrainingsCompleted INT DEFAULT 0,
+  HasCertification BIT DEFAULT 0
+);</code></pre>
+        </div></div>
+      </section>
+
+      <section id="indexes" class="card">
+        <h2>Indexes (Questions 10–12)</h2>
+
+        <div class="q"><div class="qnum">10</div><div>
+          <h3>What is an index? Why important? How many? Example</h3>
+          <p class="explain">An index is a data structure that speeds up data retrieval (like a book index). It helps SELECT queries run faster but adds cost on INSERT/UPDATE/DELETE.</p>
+          <p class="explain">How many? Databases allow many indexes per table (exact limit depends on RDBMS). Practically, add indexes for columns used frequently in WHERE, JOIN, ORDER BY.</p>
+          <pre><code>Example (create index on Salary):
+CREATE INDEX IX_Employee_Salary ON Employee(Salary);</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">11</div><div>
+          <h3>Types of indexes & differences</h3>
+          <ul style="color:var(--muted)">
+            <li><strong>Clustered index</strong>: stores table rows in index order (table physically ordered). Only one per table (usually the PK).</li>
+            <li><strong>Non-clustered index</strong>: separate structure pointing to rows. Many per table.</li>
+            <li><strong>Unique index</strong>: enforces uniqueness.</li>
+            <li><strong>Composite index</strong>: index on multiple columns.</li>
+            <li><strong>Full-text index</strong>: optimized for text searches (DB-specific).</li>
+            <li><strong>Bitmap, filtered, hash indexes</strong>: specialized types (DB-specific).</li>
+          </ul>
+        </div></div>
+
+        <div class="q"><div class="qnum">12</div><div>
+          <h3>Clustered vs Non-clustered — importance, counts, example</h3>
+          <p class="explain"><strong>Clustered:</strong> controls physical row order, good for range queries and ordering. Usually one per table (because rows can have one physical order).</p>
+          <p class="explain"><strong>Non-clustered:</strong> separate pointer structure; good for selective lookups. You can have many non-clustered indexes.</p>
+          <pre><code>Example (SQL Server style):
+-- Make EmpID clustered (often the default when PK created)
+CREATE CLUSTERED INDEX CX_EmpID ON Employee(EmpID);
+
+-- Non-clustered on DeptID + Salary
+CREATE NONCLUSTERED INDEX IX_Emp_Dept_Salary ON Employee(DeptID, Salary);</code></pre>
+        </div></div>
+      </section>
+
+      <section id="views" class="card">
+        <h2>Views, Stored Procedures, Triggers, Cursors, Transactions (13–18)</h2>
+
+        <div class="q"><div class="qnum">13</div><div>
+          <h3>What is a view? Why important? How many? Example</h3>
+          <p class="explain">A VIEW is a saved query that looks like a virtual table. Useful for simplifying complex queries, security (limit columns), and reusability.</p>
+          <p class="explain">How many? Many views allowed — limited by DB but practically unlimited.</p>
+          <pre><code>Example:
+CREATE VIEW vw_Emp_Basic AS
+SELECT EmpID, EmpName, DeptID FROM Employee;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">14</div><div>
+          <h3>What is a stored procedure? Why important? How many? Example</h3>
+          <p class="explain">Stored Procedure is a named block of SQL/logic stored in DB, callable by clients. Useful for encapsulating logic, performance (precompiled plan), and security.</p>
+          <p class="explain">How many? Many stored procedures allowed.</p>
+          <pre><code>Example (SQL Server):
+CREATE PROCEDURE usp_GetEmployeesByDept @DeptID INT
+AS
+SELECT * FROM Employee WHERE DeptID = @DeptID;
+GO</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">15</div><div>
+          <h3>What is a trigger? Why important? How many? Example</h3>
+          <p class="explain">Trigger runs automatically when certain data changes (INSERT/UPDATE/DELETE). Use for auditing, enforcing rules, or denormalized updates. Use with caution — can hide complexity.</p>
+          <p class="explain">How many? Multiple triggers allowed per table (DB-specific rules on ordering).</p>
+          <pre><code>Example (audit insert):
+CREATE TABLE EmployeeAudit (EmpID INT, Action VARCHAR(10), ActionTime DATETIME);
+
+CREATE TRIGGER trg_Emp_Insert
+ON Employee
+AFTER INSERT
+AS
+INSERT INTO EmployeeAudit (EmpID, Action, ActionTime)
+SELECT EmpID, 'INSERT', GETDATE() FROM inserted;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">16</div><div>
+          <h3>What is a cursor? Why important? How many? Example</h3>
+          <p class="explain">A cursor lets you iterate row-by-row in SQL (like a loop). Useful for row-wise operations that are hard in set-based SQL. But cursors are slower — prefer set operations.</p>
+          <p class="explain">How many? You can declare many cursors; DB resources limit practical use.</p>
+          <pre><code>Example (SQL Server):
+DECLARE EmpCursor CURSOR FOR SELECT EmpID, EmpName FROM Employee;
+OPEN EmpCursor;
+DECLARE @id INT, @name VARCHAR(100);
+FETCH NEXT FROM EmpCursor INTO @id, @name;
+WHILE @@FETCH_STATUS = 0
+BEGIN
+  PRINT @name;
+  FETCH NEXT FROM EmpCursor INTO @id, @name;
+END
+CLOSE EmpCursor;
+DEALLOCATE EmpCursor;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">17</div><div>
+          <h3>What is a transaction? Why important? How many? Example</h3>
+          <p class="explain">A transaction groups multiple operations so they succeed or fail together — ensures data integrity. Use for money transfer, multi-row updates, etc.</p>
+          <p class="explain">How many? Many transactions can be started; nested transactions supported differently by DBs (savepoints used for partial rollbacks).</p>
+          <pre><code>Example:
+BEGIN TRANSACTION;
+UPDATE Accounts SET Balance = Balance - 100 WHERE AccountID = 1;
+UPDATE Accounts SET Balance = Balance + 100 WHERE AccountID = 2;
+-- If both succeed:
+COMMIT;
+-- If any fails:
+-- ROLLBACK;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">18</div><div>
+          <h3>ACID properties — why important, examples</h3>
+          <p class="explain">ACID makes DB transactions reliable:</p>
+          <ul style="color:var(--muted)">
+            <li><strong>Atomicity:</strong> All or nothing. Example: transfer — both debit & credit must apply or none.</li>
+            <li><strong>Consistency:</strong> DB moves from one valid state to another. Example: foreign keys, check constraints remain valid after transaction.</li>
+            <li><strong>Isolation:</strong> Concurrent transactions don't interfere. Example: two transactions updating same row are isolated (serializable/locks).</li>
+            <li><strong>Durability:</strong> Once committed, data persists (survives crashes).</li>
+          </ul>
+        </div></div>
+      </section>
+
+      <section id="dml" class="card">
+        <h2>DML Differences, Data Types & Joins (19–30)</h2>
+
+        <div class="q"><div class="qnum">19</div><div>
+          <h3>DELETE vs TRUNCATE — difference & when to use</h3>
+          <p class="explain">DELETE removes rows and can be filtered with WHERE; logs each row (can ROLLBACK). TRUNCATE deletes all rows quickly, resets identity and minimally logged — cannot use WHERE and sometimes cannot be rolled back in some DBs without transaction.</p>
+          <p class="explain">Use DELETE when you need row-level control or triggers. Use TRUNCATE for fast full-table clear.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">20</div><div>
+          <h3>CHAR vs VARCHAR — difference & when to use</h3>
+          <p class="explain">CHAR(N) is fixed-length — always uses N bytes (padded). VARCHAR(N) is variable-length — uses only needed bytes. Use CHAR for fixed-size fields (like country code), VARCHAR for text of variable length (names, descriptions).</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">21</div><div>
+          <h3>INNER, LEFT, RIGHT, FULL JOIN — differences + examples</h3>
+          <p class="explain">Short: INNER = intersection; LEFT = all left rows + matched right; RIGHT = all right rows + matched left; FULL = all rows from both sides.</p>
+          <pre><code>Example: Find employees with department info
+-- INNER JOIN: only employees with Dept
+SELECT e.EmpName, d.DeptName
+FROM Employee e
+INNER JOIN Department d ON e.DeptID = d.DeptID;
+
+-- LEFT JOIN: all employees, dept NULL if missing
+SELECT e.EmpName, d.DeptName
+FROM Employee e
+LEFT JOIN Department d ON e.DeptID = d.DeptID;
+
+-- RIGHT JOIN (opposite)
+SELECT e.EmpName, d.DeptName
+FROM Employee e
+RIGHT JOIN Department d ON e.DeptID = d.DeptID;
+
+-- FULL JOIN (both sides)
+SELECT e.EmpName, d.DeptName
+FROM Employee e
+FULL OUTER JOIN Department d ON e.DeptID = d.DeptID;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">22</div><div>
+          <h3>UNION vs UNION ALL — difference & when to use</h3>
+          <p class="explain">UNION removes duplicates (performs distinct). UNION ALL keeps duplicates and is faster. Use UNION ALL when duplicates are OK or desired; use UNION when you want unique rows.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">23</div><div>
+          <h3>HAVING vs WHERE — difference & when to use</h3>
+          <p class="explain">WHERE filters rows before aggregation. HAVING filters groups after aggregation.</p>
+          <pre><code>Example:
+SELECT DeptID, COUNT(*) cnt
+FROM Employee
+WHERE Salary &gt; 3000    -- row filter (before group)
+GROUP BY DeptID
+HAVING COUNT(*) &gt; 5    -- group filter (after aggregation)</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">24</div><div>
+          <h3>Subquery vs Join — difference & when to use</h3>
+          <p class="explain">A subquery is a query inside another query; a join combines tables in one query. Joins are usually faster and clearer for pulling related columns; subqueries can be simpler for filtering or when you need aggregated value for a condition.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">25</div><div>
+          <h3>Correlated vs Non-correlated subquery — difference & when to use</h3>
+          <p class="explain">Non-correlated subquery runs once (independent). Correlated subquery references outer query columns and runs per outer row (slower). Use correlated when condition depends on outer row (e.g., row-wise check).</p>
+          <pre><code>Non-correlated:
+SELECT EmpName FROM Employee WHERE Salary &gt; (SELECT AVG(Salary) FROM Employee);
+
+Correlated:
+SELECT e.EmpName FROM Employee e
+WHERE e.Salary &gt; (SELECT AVG(s.Salary) FROM Employee s WHERE s.DeptID = e.DeptID);</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">26</div><div>
+          <h3>Self-join vs regular join — difference & when to use</h3>
+          <p class="explain">Self-join joins a table to itself (useful for hierarchical data, like manager/employee). Regular join uses two different tables.</p>
+          <pre><code>Example (employees & their manager names)
+SELECT e.EmpName, m.EmpName AS ManagerName
+FROM Employee e
+LEFT JOIN Employee m ON e.ManagerID = m.EmpID;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">27</div><div>
+          <h3>Primary key vs Unique key — difference & when to use</h3>
+          <p class="explain">PK: single row identifier, not nullable, one per table. UNIQUE: enforces uniqueness on column(s), can be many. Use PK for identity; UNIQUE for alternate identifiers (email, passport number).</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">28</div><div>
+          <h3>Clustered vs Non-clustered index — difference & when to use</h3>
+          <p class="explain">Clustered orders rows physically — good for range scans (date range). Non-clustered good for selective lookups where you need quick access by particular column(s).</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">29</div><div>
+          <h3>View vs Table — difference & when to use</h3>
+          <p class="explain">Table stores data. View is a saved query (virtual). Use views to simplify queries, present limited columns, or provide an API layer; use tables to store persistent data.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">30</div><div>
+          <h3>Stored procedure vs function — difference & when to use</h3>
+          <p class="explain">Functions return a value and can be used in SELECT; often must be deterministic and without side effects. Procedures perform actions and can return multiple result sets, output params, and have side effects. Use functions for computations, procedures for workflows and DML.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">31</div><div>
+          <h3>Trigger vs Stored Procedure — difference & when to use</h3>
+          <p class="explain">Trigger runs automatically in response to DML. Stored procedure runs when explicitly called. Use triggers for automatic auditing/constraints; procedures for explicit operations.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">32</div><div>
+          <h3>Cursor vs Temporary Table — difference & when to use</h3>
+          <p class="explain">Cursor iterates row by row (slow). Temporary table stores intermediate results for further set-based processing (usually faster). Prefer temp tables or set-based operations over cursors.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">33</div><div>
+          <h3>Transaction vs Savepoint — difference & when to use</h3>
+          <p class="explain">Transaction groups operations. Savepoint marks a point inside a transaction you can rollback to without undoing earlier work. Use savepoints for partial rollback inside large transactions.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">34</div><div>
+          <h3>Deadlock vs Livelock — difference & prevention</h3>
+          <p class="explain">Deadlock: two transactions wait forever for each other’s locks and DB kills one. Livelock: transactions keep changing state and retry but never make progress.</p>
+          <p class="explain">Prevention: keep transactions short, access resources in same order, use appropriate isolation levels, add retries, use index to reduce lock contention.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">35</div><div>
+          <h3>Data warehouse vs Database — difference & when to use</h3>
+          <p class="explain">Database (OLTP): transactional, normalized, many small reads/writes. Data warehouse (OLAP): optimized for analytics, denormalized or star schema, large scans. Use warehouse for analytics/reporting, DB for day-to-day apps.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">36</div><div>
+          <h3>OLTP vs OLAP — difference & when to use</h3>
+          <p class="explain">OLTP = Online Transaction Processing (many small transactions, low latency). OLAP = Online Analytical Processing (complex queries, aggregations). Choose OLTP for apps; OLAP for reporting and BI.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">37</div><div>
+          <h3>Star schema vs Snowflake schema — difference & when to use</h3>
+          <p class="explain">Star: central fact table + denormalized dimension tables (simple, fast queries). Snowflake: dimensions normalized into sub-tables (saves space, more joins). Use star for performance & simplicity in BI.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">38</div><div>
+          <h3>Fact table vs Dimension table — difference & when to use</h3>
+          <p class="explain">Fact: numeric measures (sales amount) with foreign keys. Dimension: descriptive attributes (product name, date). Use facts for metrics and dimensions for slicing.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">39</div><div>
+          <h3>Surrogate key vs Natural key — difference & when to use</h3>
+          <p class="explain">Surrogate: artificial ID (e.g., auto-increment). Natural: meaningful business data (email). Use surrogate for simplicity and flexibility; natural when a business attribute truly identifies rows and is stable.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">40</div><div>
+          <h3>Data mart vs Data warehouse — difference & when to use</h3>
+          <p class="explain">Data mart: focused subset of warehouse for a team (sales, finance). Warehouse: enterprise-wide. Use mart for department-specific analytics.</p>
+        </div></div>
+      </section>
+
+      <section id="advanced" class="card">
+        <h2>Temporary Objects, CTEs & Window Functions (41–50)</h2>
+
+        <div class="q"><div class="qnum">41</div><div>
+          <h3>Table Variables — what, importance, example</h3>
+          <p class="explain">Table variable is an in-memory-like temporary table (SQL Server specific: DECLARE @t TABLE(...)). Good for small intermediate results inside procedures. Scope is limited to the batch/proc/function.</p>
+          <pre><code>Example (SQL Server):
+DECLARE @TempEmp TABLE(EmpID INT, EmpName VARCHAR(100));
+INSERT INTO @TempEmp VALUES (1,'Alice');
+SELECT * FROM @TempEmp;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">42</div><div>
+          <h3>Temporary tables — what, importance, example</h3>
+          <p class="explain">Temporary table (#temp or ##temp) persists for the session or procedure. Useful for larger intermediate results and adding indexes for performance during processing.</p>
+          <pre><code>Example (SQL Server):
+CREATE TABLE #TempEmp (EmpID INT, EmpName VARCHAR(100));
+INSERT INTO #TempEmp SELECT EmpID, EmpName FROM Employee WHERE DeptID = 10;
+SELECT * FROM #TempEmp;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">43</div><div>
+          <h3>Common Table Expressions (CTE) — what, importance, how many, example</h3>
+          <p class="explain">CTE is a temporary named result set used within a single statement (WITH ...). Good for readability and recursive queries. You can chain multiple CTEs in a query.</p>
+          <pre><code>Example:
+WITH DeptCounts AS (
+  SELECT DeptID, COUNT(*) AS EmpCount FROM Employee GROUP BY DeptID
+)
+SELECT d.DeptName, dc.EmpCount
+FROM Department d
+JOIN DeptCounts dc ON d.DeptID = dc.DeptID;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">44</div><div>
+          <h3>Window functions — what, importance, how many, example</h3>
+          <p class="explain">Window functions operate over a set of rows related to current row (no GROUP BY collapse). They provide rankings, running totals, averages, etc. You can use many window functions in a query.</p>
+          <pre><code>Example (ROW_NUMBER):
+SELECT EmpID, EmpName, DeptID, Salary,
+  ROW_NUMBER() OVER (PARTITION BY DeptID ORDER BY Salary DESC) AS RN
+FROM Employee;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">45</div><div>
+          <h3>RANK() vs DENSE_RANK() vs ROW_NUMBER() — difference & when to use</h3>
+          <p class="explain">
+            <strong>ROW_NUMBER()</strong>: gives unique sequential numbers (1,2,3) — breaks ties arbitrarily by ORDER BY.<br/>
+            <strong>RANK()</strong>: ties get same rank, gaps after ties (1,2,2,4).<br/>
+            <strong>DENSE_RANK()</strong>: ties get same rank, no gaps (1,2,2,3).
+          </p>
+          <pre><code>Use ROW_NUMBER when you need a unique row id (top-N). Use RANK/DENSE_RANK when ranking with ties matters.</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">46</div><div>
+          <h3>PARTITION BY vs ORDER BY in window functions — difference</h3>
+          <p class="explain">PARTITION BY groups rows for the window, ORDER BY defines ordering inside each partition. Example: partition by DeptID and order by Salary to compute rank per department.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">47</div><div>
+          <h3>LEAD() vs LAG() — difference & when to use</h3>
+          <p class="explain">LEAD() looks forward (next row), LAG() looks backward (previous row) within partition ordering. Useful for comparing current row to previous/next (e.g., change in salary).</p>
+          <pre><code>Example:
+SELECT EmpID, Salary,
+  LAG(Salary) OVER (PARTITION BY DeptID ORDER BY HireDate) AS PrevSalary,
+  LEAD(Salary) OVER (PARTITION BY DeptID ORDER BY HireDate) AS NextSalary
+FROM Employee;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">48</div><div>
+          <h3>CUME_DIST() vs PERCENT_RANK() — difference & when to use</h3>
+          <p class="explain">Both give relative position in partition:
+            <ul style="color:var(--muted)">
+              <li>CUME_DIST() = fraction of rows with value &le; current row (cumulative distribution).</li>
+              <li>PERCENT_RANK() = (rank-1)/(N-1) — relative rank scaled 0..1 (gaps occur due to ties).</li>
+            </ul>
+            Use for probability-like ranking or percentiles.
+          </p>
+        </div></div>
+
+        <div class="q"><div class="qnum">49</div><div>
+          <h3>NTILE() vs PERCENTILE_CONT() — difference & when to use</h3>
+          <p class="explain">NTILE(n) divides rows into n buckets (e.g., quartiles). PERCENTILE_CONT is an analytic function that returns a continuous percentile value (interpolated). Use NTILE for simple buckets, PERCENTILE_CONT for numeric percentile boundaries.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">50</div><div>
+          <h3>FIRST_VALUE() vs LAST_VALUE() — difference & when to use</h3>
+          <p class="explain">FIRST_VALUE returns first value in window frame; LAST_VALUE returns last value (frame considerations matter — define frame correctly). Use to pick earliest/latest values per partition.</p>
+        </div></div>
+      </section>
+
+      <section id="queries" class="card">
+        <h2>Practical SQL Queries (51–70)</h2>
+        <p class="explain">All queries assume the <code>Employee</code> and <code>Department</code> tables from the sample schema in the sidebar.</p>
+
+        <div class="q"><div class="qnum">51</div><div>
+          <h3>Second highest salary without TOP/LIMIT/OFFSET</h3>
+          <pre><code>-- Option 1: using subquery
+SELECT MAX(Salary) AS SecondHighest
+FROM Employee
+WHERE Salary &lt; (SELECT MAX(Salary) FROM Employee);
+
+-- Option 2: using DISTINCT and ORDER BY (standard SQL)
+SELECT Salary FROM (
+  SELECT DISTINCT Salary FROM Employee
+) t
+WHERE Salary &lt; (SELECT MAX(Salary) FROM Employee)
+ORDER BY Salary DESC
+LIMIT 1; -- remove LIMIT if not allowed; use DB-specific alternative</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">52</div><div>
+          <h3>Find all employees who have the same manager as 'John'</h3>
+          <pre><code>SELECT e.EmpID, e.EmpName
+FROM Employee e
+WHERE e.ManagerID = (
+  SELECT ManagerID FROM Employee WHERE EmpName = 'John'
+)
+AND e.EmpName &lt;&gt; 'John';</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">53</div><div>
+          <h3>Employees with salary greater than department average</h3>
+          <pre><code>SELECT e.EmpID, e.EmpName, e.Salary, e.DeptID
+FROM Employee e
+WHERE e.Salary &gt; (
+  SELECT AVG(Salary) FROM Employee WHERE DeptID = e.DeptID
+);</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">54</div><div>
+          <h3>Departments with more than 5 employees</h3>
+          <pre><code>SELECT DeptID, COUNT(*) AS NumEmployees
+FROM Employee
+GROUP BY DeptID
+HAVING COUNT(*) &gt; 5;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">55</div><div>
+          <h3>Employees with company tenure &gt; 5 years</h3>
+          <pre><code>SELECT EmpID, EmpName, HireDate
+FROM Employee
+WHERE HireDate &lt;= DATEADD(year, -5, GETDATE()); -- SQL Server
+-- For Postgres: WHERE HireDate &lt;= CURRENT_DATE - INTERVAL '5 years'</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">56</div><div>
+          <h3>Employees who have not received any bonus in the last year</h3>
+          <pre><code>SELECT EmpID, EmpName, LastBonusDate
+FROM Employee
+WHERE LastBonusDate IS NULL OR LastBonusDate &lt; DATEADD(year, -1, GETDATE());</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">57</div><div>
+          <h3>Customers who placed &gt; 3 orders in the last month</h3>
+          <p class="explain">Assume Orders(CustomerID, OrderDate).</p>
+          <pre><code>SELECT CustomerID, COUNT(*) AS NumOrders
+FROM Orders
+WHERE OrderDate &gt;= DATEADD(month, -1, GETDATE())
+GROUP BY CustomerID
+HAVING COUNT(*) &gt; 3;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">58</div><div>
+          <h3>Products that have never been ordered</h3>
+          <p class="explain">Assume Product(ProductID) and OrderItems(ProductID).</p>
+          <pre><code>SELECT p.ProductID
+FROM Product p
+LEFT JOIN OrderItems oi ON p.ProductID = oi.ProductID
+WHERE oi.ProductID IS NULL;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">59</div><div>
+          <h3>Top 3 highest paid employees in each department</h3>
+          <pre><code>SELECT DeptID, EmpID, EmpName, Salary
+FROM (
+  SELECT EmpID, EmpName, DeptID, Salary,
+    ROW_NUMBER() OVER (PARTITION BY DeptID ORDER BY Salary DESC) AS RN
+  FROM Employee
+) t
+WHERE RN &lt;= 3
+ORDER BY DeptID, RN;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">60</div><div>
+          <h3>Employees whose salary &gt; their manager's salary</h3>
+          <pre><code>SELECT e.EmpID, e.EmpName, e.Salary, m.EmpName AS ManagerName, m.Salary AS ManagerSalary
+FROM Employee e
+JOIN Employee m ON e.ManagerID = m.EmpID
+WHERE e.Salary &gt; m.Salary;</code></pre>
+        </div></div>
+
+        <!-- Complex chained queries 61-68: incremental filters -->
+        <div class="q"><div class="qnum">61</div><div>
+          <h3>Salary &gt; dept avg AND Dept = 'IT'</h3>
+          <pre><code>SELECT e.*
+FROM Employee e
+WHERE e.Salary &gt; (
+  SELECT AVG(Salary) FROM Employee WHERE DeptID = e.DeptID
+) AND e.DeptID = (SELECT DeptID FROM Department WHERE DeptName = 'IT');</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">62</div><div>
+          <h3>... and tenure &gt; 5 years</h3>
+          <pre><code>SELECT e.*
+FROM Employee e
+WHERE e.Salary &gt; (SELECT AVG(Salary) FROM Employee WHERE DeptID = e.DeptID)
+  AND e.DeptID = (SELECT DeptID FROM Department WHERE DeptName = 'IT')
+  AND e.HireDate &lt;= DATEADD(year, -5, GETDATE());</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">63</div><div>
+          <h3>... and no bonus in last year</h3>
+          <pre><code>SELECT e.*
+FROM Employee e
+WHERE e.Salary &gt; (SELECT AVG(Salary) FROM Employee WHERE DeptID = e.DeptID)
+  AND e.DeptID = (SELECT DeptID FROM Department WHERE DeptName = 'IT')
+  AND e.HireDate &lt;= DATEADD(year, -5, GETDATE())
+  AND (e.LastBonusDate IS NULL OR e.LastBonusDate &lt; DATEADD(year,-1,GETDATE()));</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">64</div><div>
+          <h3>... and performance rating = 'A'</h3>
+          <pre><code>SELECT e.*
+FROM Employee e
+WHERE e.Salary &gt; (SELECT AVG(Salary) FROM Employee WHERE DeptID = e.DeptID)
+  AND e.DeptID = (SELECT DeptID FROM Department WHERE DeptName = 'IT')
+  AND e.HireDate &lt;= DATEADD(year, -5, GETDATE())
+  AND (e.LastBonusDate IS NULL OR e.LastBonusDate &lt; DATEADD(year,-1,GETDATE()))
+  AND e.PerformanceRating = 'A';</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">65</div><div>
+          <h3>... and completed at least 2 trainings in last year</h3>
+          <p class="explain">Assuming TrainingsCompleted counts last-year trainings; otherwise join a Trainings table.</p>
+          <pre><code>SELECT e.*
+FROM Employee e
+WHERE e.Salary &gt; (SELECT AVG(Salary) FROM Employee WHERE DeptID = e.DeptID)
+  AND e.DeptID = (SELECT DeptID FROM Department WHERE DeptName = 'IT')
+  AND e.HireDate &lt;= DATEADD(year, -5, GETDATE())
+  AND (e.LastBonusDate IS NULL OR e.LastBonusDate &lt; DATEADD(year,-1,GETDATE()))
+  AND e.PerformanceRating = 'A'
+  AND e.TrainingsCompleted &gt;= 2;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">66</div><div>
+          <h3>... and has certification</h3>
+          <pre><code>SELECT e.*
+FROM Employee e
+WHERE /* all previous conditions */
+  e.Salary &gt; (SELECT AVG(Salary) FROM Employee WHERE DeptID = e.DeptID)
+  AND e.DeptID = (SELECT DeptID FROM Department WHERE DeptName = 'IT')
+  AND e.HireDate &lt;= DATEADD(year, -5, GETDATE())
+  AND (e.LastBonusDate IS NULL OR e.LastBonusDate &lt; DATEADD(year,-1,GETDATE()))
+  AND e.PerformanceRating = 'A'
+  AND e.TrainingsCompleted &gt;= 2
+  AND e.HasCertification = 1;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">67</div><div>
+          <h3>... and has a college degree</h3>
+          <pre><code>SELECT e.*
+FROM Employee e
+WHERE /* previous conditions */
+  e.HasCertification = 1
+  AND e.HasDegree = 1;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">68</div><div>
+          <h3>... and has a clean disciplinary record</h3>
+          <pre><code>SELECT e.*
+FROM Employee e
+WHERE /* previous conditions */
+  AND e.DisciplinaryFlag = 0;</code></pre>
+          <p class="explain">These chained queries are cumulative — you can combine all filters into one WHERE clause as shown.</p>
+        </div></div>
+
+        <div class="q"><div class="qnum">69</div><div>
+          <h3>Display employee id, name, manager id, manager name</h3>
+          <pre><code>SELECT e.EmpID, e.EmpName, e.ManagerID, m.EmpName AS ManagerName
+FROM Employee e
+LEFT JOIN Employee m ON e.ManagerID = m.EmpID;</code></pre>
+        </div></div>
+
+        <div class="q"><div class="qnum">70</div><div>
+          <h3>Display employee id, name, dept id, dept name</h3>
+          <pre><code>SELECT e.EmpID, e.EmpName, e.DeptID, d.DeptName
+FROM Employee e
+LEFT JOIN Department d ON e.DeptID = d.DeptID;</code></pre>
+        </div></div>
+
+      </section>
+
+      <footer>
+        <div class="accent-box">
+          <strong>Final tips for the fresher:</strong>
+          <ul style="color:var(--muted)">
+            <li>Practice writing queries on a small dataset — try SQLite or a free Docker image.</li>
+            <li>Prefer set-based operations over cursors for performance.</li>
+            <li>Understand when to normalize vs denormalize based on read/write patterns.</li>
+            <li>During interview: explain trade-offs (why you chose an index, normalization level, etc.).</li>
+          </ul>
+        </div>
+        <p style="margin-top:10px;color:var(--muted)">You can copy this HTML and publish it as a GitHub Pages site. If you want, I can also provide a downloadable single-file version or break this into smaller tutorial pages.</p>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>

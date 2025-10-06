@@ -14,7 +14,11 @@
 </header>
 <div class="dashboard">
   <nav class="sidebar" aria-label="Main topics">
-    <ul role="menu">
+    <button class="sidebar-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar-list">
+      <span class="hamburger"></span>
+    </button>
+    <input type="text" id="topicSearch" class="sidebar-search" placeholder="Search topics..." aria-label="Search topics">
+    <ul id="sidebar-list" role="menu">
       <li><a href="Pages/oops-all-interview-questions.html" role="menuitem">OOP Concepts</a></li>
       <li><a href="Pages/python-all-interview-questions.html" role="menuitem">Python Questions</a></li>
       <li><a href="Pages/sql-all-interview-questions.html" role="menuitem">SQL Interview Questions & Optimization</a></li>
@@ -139,6 +143,30 @@
     Cookies Enabled: ${nav.cookieEnabled} <br>
     User Agent: ${nav.userAgent}
   `;
+
+  // Sidebar mobile toggle
+  const sidebar = document.querySelector('.sidebar');
+  const toggleBtn = document.querySelector('.sidebar-toggle');
+  const sidebarList = document.getElementById('sidebar-list');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      const expanded = sidebar.classList.contains('open');
+      toggleBtn.setAttribute('aria-expanded', expanded);
+    });
+  }
+
+  // Search topics
+  const searchBox = document.getElementById('topicSearch');
+  if (searchBox) {
+    searchBox.addEventListener('input', function() {
+      const val = this.value.toLowerCase();
+      Array.from(sidebarList.children).forEach(li => {
+        const text = li.textContent.toLowerCase();
+        li.style.display = text.includes(val) ? '' : 'none';
+      });
+    });
+  }
 </script>
 
 </body>

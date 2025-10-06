@@ -1,120 +1,122 @@
 <!-- SQL Interview Questions, Answers, and Optimization Exercises -->
+<div class="content">
+  <h1>SQL Interview Questions, Answers, and Optimization Exercises</h1>
+  <div class="question-list">
+    <!-- Basic and advanced SQL questions (from sql-interview-questions.html) -->
+    <!-- ...existing code from sql-interview-questions.html... -->
+  </div>
 
-<div class="question-list">
-  <!-- Basic and advanced SQL questions (from sql-interview-questions.html) -->
-  <!-- ...existing code from sql-interview-questions.html... -->
-</div>
+  <div class="sql-answers">
+    <!-- SQL answers, schema, and explanations (from sql-interview-questions-answers.html) -->
+    <!-- ...existing code from sql-interview-questions-answers.html... -->
+  </div>
 
-<div class="sql-answers">
-  <!-- SQL answers, schema, and explanations (from sql-interview-questions-answers.html) -->
-  <!-- ...existing code from sql-interview-questions-answers.html... -->
-</div>
+  <div class="sql-optimization">
+    <h2>SQL Query Optimization Questions</h2>
+    <ol>
+      <li>What is query optimization in SQL?</li>
+      <li>Why is query optimization important for databases?</li>
+      <li>What are the common causes of slow SQL queries?</li>
+      <li>How do indexes improve query performance?</li>
+      <li>What is the difference between clustered and non-clustered indexes?</li>
+      <li>When should you use a composite index?</li>
+      <li>What is the impact of using SELECT * in queries?</li>
+      <li>How can you reduce table scans in SQL queries?</li>
+      <li>Explain how joins can affect query performance.</li>
+      <li>What is the difference between INNER JOIN, LEFT JOIN, and RIGHT JOIN in terms of performance?</li>
+      <li>How do you optimize queries with multiple joins?</li>
+      <li>What is a query execution plan?</li>
+      <li>How can you use the execution plan to optimize queries?</li>
+      <li>What are common ways to reduce disk I/O in queries?</li>
+      <li>How do temporary tables affect query performance?</li>
+      <li>What are table variables and how do they differ from temporary tables in optimization?</li>
+      <li>How can you use indexing on foreign keys for optimization?</li>
+      <li>What is the difference between covering indexes and regular indexes?</li>
+      <li>How does statistics affect SQL query optimization?</li>
+      <li>How do you update or maintain database statistics?</li>
+      <li>What is the difference between clustered index seek and scan?</li>
+      <li>Explain the concept of query hints in SQL.</li>
+      <li>When should you avoid using functions in WHERE clauses?</li>
+      <li>How do subqueries impact performance compared to JOINs?</li>
+      <li>What is a correlated subquery and why can it be slow?</li>
+      <li>How do UNION and UNION ALL differ in performance?</li>
+      <li>When should you use EXISTS instead of IN for optimization?</li>
+      <li>How can proper use of LIMIT / TOP improve performance?</li>
+      <li>What are common indexing strategies for large tables?</li>
+      <li>How does normalization affect query performance?</li>
+      <li>When can denormalization improve query performance?</li>
+      <li>Explain the impact of data types on query optimization.</li>
+      <li>What is partitioning and how does it help with query performance?</li>
+      <li>What is the difference between horizontal and vertical partitioning?</li>
+      <li>How do you optimize queries involving GROUP BY?</li>
+      <li>What are the best practices for optimizing ORDER BY clauses?</li>
+      <li>How do you optimize queries with large IN lists?</li>
+      <li>Explain how parameter sniffing can impact query performance.</li>
+      <li>What is query plan caching and how does it affect performance?</li>
+      <li>How do you avoid blocking and deadlocks in SQL?</li>
+      <li>What is the impact of excessive triggers on query performance?</li>
+      <li>How do you optimize queries that involve LIKE with wildcards?</li>
+      <li>How can you optimize queries on datetime columns?</li>
+      <li>How do you reduce network latency in database queries?</li>
+      <li>What are materialized views and when should they be used?</li>
+      <li>How does indexing affect INSERT, UPDATE, and DELETE performance?</li>
+      <li>Explain the concept of covering index and its benefits.</li>
+      <li>How do you identify slow-running queries using SQL Server / MySQL tools?</li>
+      <li>What is the difference between row-based and column-based storage in optimization?</li>
+      <li>How does caching query results improve performance?</li>
+      <li>What are common performance pitfalls in reporting queries?</li>
+      <li>How do you tune queries in OLTP vs OLAP databases?</li>
+      <li>What are some best practices for maintaining database performance over time?</li>
+    </ol>
+  </div>
 
-<div class="sql-optimization">
-  <h2>SQL Query Optimization Questions</h2>
-  <ol>
-    <li>What is query optimization in SQL?</li>
-    <li>Why is query optimization important for databases?</li>
-    <li>What are the common causes of slow SQL queries?</li>
-    <li>How do indexes improve query performance?</li>
-    <li>What is the difference between clustered and non-clustered indexes?</li>
-    <li>When should you use a composite index?</li>
-    <li>What is the impact of using SELECT * in queries?</li>
-    <li>How can you reduce table scans in SQL queries?</li>
-    <li>Explain how joins can affect query performance.</li>
-    <li>What is the difference between INNER JOIN, LEFT JOIN, and RIGHT JOIN in terms of performance?</li>
-    <li>How do you optimize queries with multiple joins?</li>
-    <li>What is a query execution plan?</li>
-    <li>How can you use the execution plan to optimize queries?</li>
-    <li>What are common ways to reduce disk I/O in queries?</li>
-    <li>How do temporary tables affect query performance?</li>
-    <li>What are table variables and how do they differ from temporary tables in optimization?</li>
-    <li>How can you use indexing on foreign keys for optimization?</li>
-    <li>What is the difference between covering indexes and regular indexes?</li>
-    <li>How does statistics affect SQL query optimization?</li>
-    <li>How do you update or maintain database statistics?</li>
-    <li>What is the difference between clustered index seek and scan?</li>
-    <li>Explain the concept of query hints in SQL.</li>
-    <li>When should you avoid using functions in WHERE clauses?</li>
-    <li>How do subqueries impact performance compared to JOINs?</li>
-    <li>What is a correlated subquery and why can it be slow?</li>
-    <li>How do UNION and UNION ALL differ in performance?</li>
-    <li>When should you use EXISTS instead of IN for optimization?</li>
-    <li>How can proper use of LIMIT / TOP improve performance?</li>
-    <li>What are common indexing strategies for large tables?</li>
-    <li>How does normalization affect query performance?</li>
-    <li>When can denormalization improve query performance?</li>
-    <li>Explain the impact of data types on query optimization.</li>
-    <li>What is partitioning and how does it help with query performance?</li>
-    <li>What is the difference between horizontal and vertical partitioning?</li>
-    <li>How do you optimize queries involving GROUP BY?</li>
-    <li>What are the best practices for optimizing ORDER BY clauses?</li>
-    <li>How do you optimize queries with large IN lists?</li>
-    <li>Explain how parameter sniffing can impact query performance.</li>
-    <li>What is query plan caching and how does it affect performance?</li>
-    <li>How do you avoid blocking and deadlocks in SQL?</li>
-    <li>What is the impact of excessive triggers on query performance?</li>
-    <li>How do you optimize queries that involve LIKE with wildcards?</li>
-    <li>How can you optimize queries on datetime columns?</li>
-    <li>How do you reduce network latency in database queries?</li>
-    <li>What are materialized views and when should they be used?</li>
-    <li>How does indexing affect INSERT, UPDATE, and DELETE performance?</li>
-    <li>Explain the concept of covering index and its benefits.</li>
-    <li>How do you identify slow-running queries using SQL Server / MySQL tools?</li>
-    <li>What is the difference between row-based and column-based storage in optimization?</li>
-    <li>How does caching query results improve performance?</li>
-    <li>What are common performance pitfalls in reporting queries?</li>
-    <li>How do you tune queries in OLTP vs OLAP databases?</li>
-    <li>What are some best practices for maintaining database performance over time?</li>
-  </ol>
-</div>
-
-<div class="sql-exercises">
-  <h2>Live SQL Query Optimization Exercises</h2>
-  <ol>
-    <li>Optimize a query with multiple JOINs on large tables that is performing full table scans.</li>
-    <li>Rewrite a query using SELECT * to select only required columns.</li>
-    <li>Improve a query using WHERE conditions with functions like <code>UPPER(column_name)</code>.</li>
-    <li>Optimize a correlated subquery that retrieves top N records per group.</li>
-    <li>Convert a query with UNION into UNION ALL when duplicates are not needed.</li>
-    <li>Optimize a query using multiple OR conditions in WHERE clause.</li>
-    <li>Rewrite a query using IN clause to EXISTS for better performance.</li>
-    <li>Identify and create proper indexes for a slow query filtering on multiple columns.</li>
-    <li>Improve a query with ORDER BY on a non-indexed column in a large table.</li>
-    <li>Rewrite a query using GROUP BY with aggregate functions for faster execution.</li>
-    <li>Optimize a query with multiple nested subqueries.</li>
-    <li>Rewrite queries with LEFT JOINs when INNER JOINs are sufficient.</li>
-    <li>Identify and fix queries that cause deadlocks or blocking.</li>
-    <li>Optimize a query with LIKE '%something%' patterns on large datasets.</li>
-    <li>Rewrite a query with SELECT DISTINCT that is slow due to unnecessary joins.</li>
-    <li>Optimize a query fetching data from multiple large tables using temporary tables.</li>
-    <li>Improve a query that calculates averages or sums over millions of rows.</li>
-    <li>Identify queries that cause full table scans due to non-selective indexes.</li>
-    <li>Optimize a query with ORDER BY and LIMIT for top-N results efficiently.</li>
-    <li>Rewrite queries using CTEs instead of multiple subqueries to enhance readability and performance.</li>
-    <li>Optimize a query that uses functions in WHERE clauses, e.g., <code>DATE(column_name)</code>.</li>
-    <li>Rewrite queries with multiple joins and redundant tables.</li>
-    <li>Optimize a query with a heavy HAVING clause filtering on aggregates.</li>
-    <li>Identify queries that benefit from partitioning and rewrite accordingly.</li>
-    <li>Optimize a query using LEFT JOIN where INNER JOIN or EXISTS is more efficient.</li>
-    <li>Rewrite a query using GROUP BY on large tables with indexes on grouped columns.</li>
-    <li>Optimize a query with ORDER BY multiple columns on huge datasets.</li>
-    <li>Identify and rewrite queries with subqueries in SELECT that can be joined instead.</li>
-    <li>Optimize queries on nullable columns to avoid unnecessary scans.</li>
-    <li>Rewrite queries that use OR in WHERE clause to UNION ALL with multiple queries.</li>
-    <li>Improve queries that do multiple full table scans due to lack of indexing.</li>
-    <li>Rewrite queries to use batch inserts or updates instead of row-by-row processing.</li>
-    <li>Optimize queries joining tables with uneven data distribution.</li>
-    <li>Rewrite queries using NOT IN to NOT EXISTS for large datasets.</li>
-    <li>Identify and fix slow queries caused by implicit type conversions.</li>
-    <li>Optimize queries with aggregate functions on non-indexed columns.</li>
-    <li>Rewrite queries using ORDER BY RAND() or NEWID() for large tables.</li>
-    <li>Identify queries causing tempdb or memory bottlenecks and optimize them.</li>
-    <li>Rewrite queries using window functions (ROW_NUMBER, RANK) efficiently.</li>
-    <li>Optimize queries fetching latest record per group using JOIN vs subquery.</li>
-    <li>Rewrite queries using multiple LIKE clauses into full-text search indexes.</li>
-    <li>Optimize queries that fetch data from JSON or XML columns.</li>
-    <li>Rewrite queries using multi-column filters to leverage composite indexes.</li>
-    <li>Optimize queries with repeated calculations in SELECT clauses.</li>
-  </ol>
+  <div class="sql-exercises">
+    <h2>Live SQL Query Optimization Exercises</h2>
+    <ol>
+      <li>Optimize a query with multiple JOINs on large tables that is performing full table scans.</li>
+      <li>Rewrite a query using SELECT * to select only required columns.</li>
+      <li>Improve a query using WHERE conditions with functions like <code>UPPER(column_name)</code>.</li>
+      <li>Optimize a correlated subquery that retrieves top N records per group.</li>
+      <li>Convert a query with UNION into UNION ALL when duplicates are not needed.</li>
+      <li>Optimize a query using multiple OR conditions in WHERE clause.</li>
+      <li>Rewrite a query using IN clause to EXISTS for better performance.</li>
+      <li>Identify and create proper indexes for a slow query filtering on multiple columns.</li>
+      <li>Improve a query with ORDER BY on a non-indexed column in a large table.</li>
+      <li>Rewrite a query using GROUP BY with aggregate functions for faster execution.</li>
+      <li>Optimize a query with multiple nested subqueries.</li>
+      <li>Rewrite queries with LEFT JOINs when INNER JOINs are sufficient.</li>
+      <li>Identify and fix queries that cause deadlocks or blocking.</li>
+      <li>Optimize a query with LIKE '%something%' patterns on large datasets.</li>
+      <li>Rewrite a query with SELECT DISTINCT that is slow due to unnecessary joins.</li>
+      <li>Optimize a query fetching data from multiple large tables using temporary tables.</li>
+      <li>Improve a query that calculates averages or sums over millions of rows.</li>
+      <li>Identify queries that cause full table scans due to non-selective indexes.</li>
+      <li>Optimize a query with ORDER BY and LIMIT for top-N results efficiently.</li>
+      <li>Rewrite queries using CTEs instead of multiple subqueries to enhance readability and performance.</li>
+      <li>Optimize a query that uses functions in WHERE clauses, e.g., <code>DATE(column_name)</code>.</li>
+      <li>Rewrite queries with multiple joins and redundant tables.</li>
+      <li>Optimize a query with a heavy HAVING clause filtering on aggregates.</li>
+      <li>Identify queries that benefit from partitioning and rewrite accordingly.</li>
+      <li>Optimize a query using LEFT JOIN where INNER JOIN or EXISTS is more efficient.</li>
+      <li>Rewrite a query using GROUP BY on large tables with indexes on grouped columns.</li>
+      <li>Optimize a query with ORDER BY multiple columns on huge datasets.</li>
+      <li>Identify and rewrite queries with subqueries in SELECT that can be joined instead.</li>
+      <li>Optimize queries on nullable columns to avoid unnecessary scans.</li>
+      <li>Rewrite queries that use OR in WHERE clause to UNION ALL with multiple queries.</li>
+      <li>Improve queries that do multiple full table scans due to lack of indexing.</li>
+      <li>Rewrite queries to use batch inserts or updates instead of row-by-row processing.</li>
+      <li>Optimize queries joining tables with uneven data distribution.</li>
+      <li>Rewrite queries using NOT IN to NOT EXISTS for large datasets.</li>
+      <li>Identify and fix slow queries caused by implicit type conversions.</li>
+      <li>Optimize queries with aggregate functions on non-indexed columns.</li>
+      <li>Rewrite queries using ORDER BY RAND() or NEWID() for large tables.</li>
+      <li>Identify queries causing tempdb or memory bottlenecks and optimize them.</li>
+      <li>Rewrite queries using window functions (ROW_NUMBER, RANK) efficiently.</li>
+      <li>Optimize queries fetching latest record per group using JOIN vs subquery.</li>
+      <li>Rewrite queries using multiple LIKE clauses into full-text search indexes.</li>
+      <li>Optimize queries that fetch data from JSON or XML columns.</li>
+      <li>Rewrite queries using multi-column filters to leverage composite indexes.</li>
+      <li>Optimize queries with repeated calculations in SELECT clauses.</li>
+    </ol>
+  </div>
 </div>

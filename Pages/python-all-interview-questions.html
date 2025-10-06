@@ -1,85 +1,87 @@
 <!-- Python Interview Questions -->
-<div class="question-list">
-  <ol>
-    <li>
-      <strong>What are Python’s key features?</strong>
-      <ul>
-        <li><b>Easy to Learn & Readable:</b> Python uses clear, English-like syntax.</li>
-        <li><b>Interpreted Language:</b> No compilation step; code runs line by line.</li>
-        <li><b>Dynamically Typed:</b> No need to declare variable types.</li>
-        <li><b>Extensive Standard Library:</b> Rich modules for everything from math to web.</li>
-        <li><b>Cross-platform:</b> Runs on Windows, Mac, Linux, etc.</li>
-        <li><b>Object-Oriented & Functional:</b> Supports both paradigms.</li>
-        <li><b>Large Community:</b> Lots of support, tutorials, and third-party packages.</li>
-      </ul>
-    </li>
-    <li>
-      <strong>What is the difference between Python 2 and Python 3?</strong>
-      <ul>
-        <li><b>Print Statement:</b> <code>print 'Hello'</code> (Python 2) vs <code>print('Hello')</code> (Python 3)</li>
-        <li><b>Integer Division:</b> <code>5/2 = 2</code> (Python 2), <code>5/2 = 2.5</code> (Python 3)</li>
-        <li><b>Unicode:</b> Strings are ASCII by default in Python 2, Unicode in Python 3.</li>
-        <li><b>xrange:</b> <code>xrange()</code> in Python 2, replaced by <code>range()</code> in Python 3.</li>
-        <li><b>End of Life:</b> Python 2 is no longer maintained; Python 3 is the standard.</li>
-      </ul>
-    </li>
-    <li>
-      <strong>What are Python’s data types?</strong>
-      <ul>
-        <li><b>Numbers:</b> <code>int</code>, <code>float</code>, <code>complex</code></li>
-        <li><b>String:</b> <code>str</code></li>
-        <li><b>Sequence:</b> <code>list</code>, <code>tuple</code>, <code>range</code></li>
-        <li><b>Mapping:</b> <code>dict</code></li>
-        <li><b>Set:</b> <code>set</code>, <code>frozenset</code></li>
-        <li><b>Boolean:</b> <code>bool</code></li>
-        <li><b>NoneType:</b> <code>None</code></li>
-      </ul>
-      <pre><code>example = [42, 3.14, 'hello', True, None, {'a': 1}, {1,2,3}]
+<div class="content">
+  <h1>Python Interview Questions</h1>
+  <div class="question-list">
+    <ol>
+      <li>
+        <strong>What are Python’s key features?</strong>
+        <ul>
+          <li><b>Easy to Learn & Readable:</b> Python uses clear, English-like syntax.</li>
+          <li><b>Interpreted Language:</b> No compilation step; code runs line by line.</li>
+          <li><b>Dynamically Typed:</b> No need to declare variable types.</li>
+          <li><b>Extensive Standard Library:</b> Rich modules for everything from math to web.</li>
+          <li><b>Cross-platform:</b> Runs on Windows, Mac, Linux, etc.</li>
+          <li><b>Object-Oriented & Functional:</b> Supports both paradigms.</li>
+          <li><b>Large Community:</b> Lots of support, tutorials, and third-party packages.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>What is the difference between Python 2 and Python 3?</strong>
+        <ul>
+          <li><b>Print Statement:</b> <code>print 'Hello'</code> (Python 2) vs <code>print('Hello')</code> (Python 3)</li>
+          <li><b>Integer Division:</b> <code>5/2 = 2</code> (Python 2), <code>5/2 = 2.5</code> (Python 3)</li>
+          <li><b>Unicode:</b> Strings are ASCII by default in Python 2, Unicode in Python 3.</li>
+          <li><b>xrange:</b> <code>xrange()</code> in Python 2, replaced by <code>range()</code> in Python 3.</li>
+          <li><b>End of Life:</b> Python 2 is no longer maintained; Python 3 is the standard.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>What are Python’s data types?</strong>
+        <ul>
+          <li><b>Numbers:</b> <code>int</code>, <code>float</code>, <code>complex</code></li>
+          <li><b>String:</b> <code>str</code></li>
+          <li><b>Sequence:</b> <code>list</code>, <code>tuple</code>, <code>range</code></li>
+          <li><b>Mapping:</b> <code>dict</code></li>
+          <li><b>Set:</b> <code>set</code>, <code>frozenset</code></li>
+          <li><b>Boolean:</b> <code>bool</code></li>
+          <li><b>NoneType:</b> <code>None</code></li>
+        </ul>
+        <pre><code>example = [42, 3.14, 'hello', True, None, {'a': 1}, {1,2,3}]
 print([type(x) for x in example])
 # Output: [<class 'int'>, <class 'float'>, <class 'str'>, <class 'bool'>, <class 'NoneType'>, <class 'dict'>, <class 'set'>]
 </code></pre>
-    </li>
-    <li>
-      <strong>What is the difference between list, tuple, set, and dictionary?</strong>
-      <table border="1" style="border-collapse:collapse;">
-        <tr><th>Type</th><th>Syntax</th><th>Mutable?</th><th>Ordered?</th><th>Duplicates?</th><th>Example</th></tr>
-        <tr><td>List</td><td>[ ]</td><td>Yes</td><td>Yes</td><td>Yes</td><td><code>[1,2,3]</code></td></tr>
-        <tr><td>Tuple</td><td>( )</td><td>No</td><td>Yes</td><td>Yes</td><td><code>(1,2,3)</code></td></tr>
-        <tr><td>Set</td><td>{ }</td><td>Yes</td><td>No</td><td>No</td><td><code>{1,2,3}</code></td></tr>
-        <tr><td>Dict</td><td>{key:val}</td><td>Yes</td><td>Yes (3.7+)</td><td>Keys unique</td><td><code>{'a':1,'b':2}</code></td></tr>
-      </table>
-    </li>
-    <li>
-      <strong>How is memory managed in Python?</strong>
-      <ul>
-        <li>Automatic memory management using <b>reference counting</b> and <b>garbage collection</b>.</li>
-        <li>When an object’s reference count drops to zero, it is deleted.</li>
-        <li>Cyclic garbage collector handles reference cycles.</li>
-        <li>Developers can use <code>del</code> to remove references, and <code>gc</code> module for manual collection.</li>
-      </ul>
-      <pre><code>import gc
+      </li>
+      <li>
+        <strong>What is the difference between list, tuple, set, and dictionary?</strong>
+        <table border="1" style="border-collapse:collapse;">
+          <tr><th>Type</th><th>Syntax</th><th>Mutable?</th><th>Ordered?</th><th>Duplicates?</th><th>Example</th></tr>
+          <tr><td>List</td><td>[ ]</td><td>Yes</td><td>Yes</td><td>Yes</td><td><code>[1,2,3]</code></td></tr>
+          <tr><td>Tuple</td><td>( )</td><td>No</td><td>Yes</td><td>Yes</td><td><code>(1,2,3)</code></td></tr>
+          <tr><td>Set</td><td>{ }</td><td>Yes</td><td>No</td><td>No</td><td><code>{1,2,3}</code></td></tr>
+          <tr><td>Dict</td><td>{key:val}</td><td>Yes</td><td>Yes (3.7+)</td><td>Keys unique</td><td><code>{'a':1,'b':2}</code></td></tr>
+        </table>
+      </li>
+      <li>
+        <strong>How is memory managed in Python?</strong>
+        <ul>
+          <li>Automatic memory management using <b>reference counting</b> and <b>garbage collection</b>.</li>
+          <li>When an object’s reference count drops to zero, it is deleted.</li>
+          <li>Cyclic garbage collector handles reference cycles.</li>
+          <li>Developers can use <code>del</code> to remove references, and <code>gc</code> module for manual collection.</li>
+        </ul>
+        <pre><code>import gc
 print(gc.get_count())  # Show current collection counts
 </code></pre>
-    </li>
-    <li>
-      <strong>What are Python’s mutable and immutable types?</strong>
-      <ul>
-        <li><b>Mutable:</b> Can be changed after creation. Examples: <code>list</code>, <code>dict</code>, <code>set</code>, <code>bytearray</code></li>
-        <li><b>Immutable:</b> Cannot be changed after creation. Examples: <code>int</code>, <code>float</code>, <code>str</code>, <code>tuple</code>, <code>frozenset</code>, <code>bytes</code></li>
-      </ul>
-      <pre><code>lst = [1,2,3]
+      </li>
+      <li>
+        <strong>What are Python’s mutable and immutable types?</strong>
+        <ul>
+          <li><b>Mutable:</b> Can be changed after creation. Examples: <code>list</code>, <code>dict</code>, <code>set</code>, <code>bytearray</code></li>
+          <li><b>Immutable:</b> Cannot be changed after creation. Examples: <code>int</code>, <code>float</code>, <code>str</code>, <code>tuple</code>, <code>frozenset</code>, <code>bytes</code></li>
+        </ul>
+        <pre><code>lst = [1,2,3]
 lst[0] = 10  # OK
 s = (1,2,3)
 s[0] = 10    # Error: 'tuple' object does not support item assignment
 </code></pre>
-    </li>
-    <li>
-      <strong>What is the difference between deep copy and shallow copy?</strong>
-      <ul>
-        <li><b>Shallow Copy:</b> Copies the outer object, but not nested objects. Changes to nested objects affect both copies.</li>
-        <li><b>Deep Copy:</b> Copies the object and all nested objects recursively. Changes to one do not affect the other.</li>
-      </ul>
-      <pre><code>import copy
+      </li>
+      <li>
+        <strong>What is the difference between deep copy and shallow copy?</strong>
+        <ul>
+          <li><b>Shallow Copy:</b> Copies the outer object, but not nested objects. Changes to nested objects affect both copies.</li>
+          <li><b>Deep Copy:</b> Copies the object and all nested objects recursively. Changes to one do not affect the other.</li>
+        </ul>
+        <pre><code>import copy
 lst1 = [[1,2], [3,4]]
 lst2 = copy.copy(lst1)      # Shallow copy
 lst3 = copy.deepcopy(lst1)  # Deep copy
@@ -87,36 +89,36 @@ lst1[0][0] = 99
 print(lst2)  # [[99, 2], [3, 4]]
 print(lst3)  # [[1, 2], [3, 4]]
 </code></pre>
-    </li>
-    <li>
-      <strong>What is Python’s GIL (Global Interpreter Lock)?</strong>
-      <ul>
-        <li>The GIL is a mutex that allows only one thread to execute Python bytecode at a time (in CPython).</li>
-        <li>It simplifies memory management but limits true parallelism in multi-threaded programs.</li>
-        <li>For CPU-bound tasks, use multiprocessing; for I/O-bound, threads are still useful.</li>
-      </ul>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Python_GIL.svg" alt="Python GIL visualization" style="max-width:300px;">
-    </li>
-    <li>
-      <strong>What is Python namespace?</strong>
-      <ul>
-        <li>A namespace is a container that maps names to objects. It ensures that names are unique and prevents naming conflicts.</li>
-        <li>Examples: built-in namespace, global namespace, local namespace.</li>
-      </ul>
-      <pre><code>a = 10  # 'a' is in the global namespace
+      </li>
+      <li>
+        <strong>What is Python’s GIL (Global Interpreter Lock)?</strong>
+        <ul>
+          <li>The GIL is a mutex that allows only one thread to execute Python bytecode at a time (in CPython).</li>
+          <li>It simplifies memory management but limits true parallelism in multi-threaded programs.</li>
+          <li>For CPU-bound tasks, use multiprocessing; for I/O-bound, threads are still useful.</li>
+        </ul>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Python_GIL.svg" alt="Python GIL visualization" style="max-width:300px;">
+      </li>
+      <li>
+        <strong>What is Python namespace?</strong>
+        <ul>
+          <li>A namespace is a container that maps names to objects. It ensures that names are unique and prevents naming conflicts.</li>
+          <li>Examples: built-in namespace, global namespace, local namespace.</li>
+        </ul>
+        <pre><code>a = 10  # 'a' is in the global namespace
 def foo():
     b = 20  # 'b' is in the local namespace of foo
 </code></pre>
-    </li>
-    <li>
-      <strong>What are Python’s scopes (LEGB rule)?</strong>
-      <ul>
-        <li><b>L</b>ocal: Names assigned in a function (def or lambda).</li>
-        <li><b>E</b>nclosing: Names in enclosing functions (nested functions).</li>
-        <li><b>G</b>lobal: Names assigned at the top-level of a module or declared global.</li>
-        <li><b>B</b>uilt-in: Names preassigned in Python (e.g., <code>len</code>, <code>range</code>).</li>
-      </ul>
-      <pre><code>x = 'global'
+      </li>
+      <li>
+        <strong>What are Python’s scopes (LEGB rule)?</strong>
+        <ul>
+          <li><b>L</b>ocal: Names assigned in a function (def or lambda).</li>
+          <li><b>E</b>nclosing: Names in enclosing functions (nested functions).</li>
+          <li><b>G</b>lobal: Names assigned at the top-level of a module or declared global.</li>
+          <li><b>B</b>uilt-in: Names preassigned in Python (e.g., <code>len</code>, <code>range</code>).</li>
+        </ul>
+        <pre><code>x = 'global'
 def outer():
     x = 'enclosing'
     def inner():
@@ -125,42 +127,42 @@ def outer():
     inner()
 outer()  # Output: local
 </code></pre>
-    </li>
-    <li>
-      <strong>What are Python functions? How do you define one?</strong>
-      <ul>
-        <li>A function is a reusable block of code that performs a specific task.</li>
-        <li>Defined using the <code>def</code> keyword, followed by the function name and parameters.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>def greet(name):
+      </li>
+      <li>
+        <strong>What are Python functions? How do you define one?</strong>
+        <ul>
+          <li>A function is a reusable block of code that performs a specific task.</li>
+          <li>Defined using the <code>def</code> keyword, followed by the function name and parameters.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>def greet(name):
     &nbsp;&nbsp;return f'Hello, {name}!'
     
   print(greet('Alice'))  # Hello, Alice!
 </code></pre>
-    </li>
-    <li>
-      <strong>What is the difference between a function and a method?</strong>
-      <ul>
-        <li><b>Function:</b> A standalone block of code that performs a task. Defined using <code>def</code>.</li>
-        <li><b>Method:</b> A function that is associated with an object. Defined within a class and called on an instance.</li>
-      </ul>
-      <pre><code>class Dog:
+      </li>
+      <li>
+        <strong>What is the difference between a function and a method?</strong>
+        <ul>
+          <li><b>Function:</b> A standalone block of code that performs a task. Defined using <code>def</code>.</li>
+          <li><b>Method:</b> A function that is associated with an object. Defined within a class and called on an instance.</li>
+        </ul>
+        <pre><code>class Dog:
     def bark(self):
         return 'Woof!'
         
   f = Dog()
   print(f.bark())  # Woof!
 </code></pre>
-    </li>
-    <li>
-      <strong>What is *args and **kwargs?</strong>
-      <ul>
-        <li><code>*args</code> allows a function to accept any number of positional arguments.</li>
-        <li><code>**kwargs</code> allows a function to accept any number of keyword arguments.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>def foo(*args, **kwargs):
+      </li>
+      <li>
+        <strong>What is *args and **kwargs?</strong>
+        <ul>
+          <li><code>*args</code> allows a function to accept any number of positional arguments.</li>
+          <li><code>**kwargs</code> allows a function to accept any number of keyword arguments.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>def foo(*args, **kwargs):
     &nbsp;&nbsp;print(args)
     &nbsp;&nbsp;print(kwargs)
     
@@ -168,15 +170,15 @@ outer()  # Output: local
   # Output: (1, 2, 3)
   #         {'a': 4, 'b': 5}
 </code></pre>
-    </li>
-    <li>
-      <strong>What are Python decorators? Give an example.</strong>
-      <ul>
-        <li>A decorator is a function that modifies the behavior of another function.</li>
-        <li>Defined using the <code>@decorator_name</code> syntax above the function to be decorated.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>def my_decorator(func):
+      </li>
+      <li>
+        <strong>What are Python decorators? Give an example.</strong>
+        <ul>
+          <li>A decorator is a function that modifies the behavior of another function.</li>
+          <li>Defined using the <code>@decorator_name</code> syntax above the function to be decorated.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>def my_decorator(func):
     def wrapper():
         print('Something is happening before the function is called.')
         func()
@@ -192,26 +194,26 @@ outer()  # Output: local
   #         Hello!
   #         Something is happening after the function is called.
 </code></pre>
-    </li>
-    <li>
-      <strong>What is a lambda function in Python?</strong>
-      <ul>
-        <li>A lambda function is a small anonymous function defined with the <code>lambda</code> keyword.</li>
-        <li>Can have any number of arguments but only one expression.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>square = lambda x: x ** 2
+      </li>
+      <li>
+        <strong>What is a lambda function in Python?</strong>
+        <ul>
+          <li>A lambda function is a small anonymous function defined with the <code>lambda</code> keyword.</li>
+          <li>Can have any number of arguments but only one expression.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>square = lambda x: x ** 2
   print(square(5))  # 25
 </code></pre>
-    </li>
-    <li>
-      <strong>What are Python modules and packages?</strong>
-      <ul>
-        <li>A module is a file containing Python code (functions, classes, variables). It ends with <code>.py</code>.</li>
-        <li>A package is a collection of related modules in a directory. It must contain a special <code>__init__.py</code> file.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code># In file my_module.py
+      </li>
+      <li>
+        <strong>What are Python modules and packages?</strong>
+        <ul>
+          <li>A module is a file containing Python code (functions, classes, variables). It ends with <code>.py</code>.</li>
+          <li>A package is a collection of related modules in a directory. It must contain a special <code>__init__.py</code> file.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code># In file my_module.py
   def greet(name):
       return f'Hello, {name}!'
   
@@ -219,29 +221,29 @@ outer()  # Output: local
   from my_module import greet
   print(greet('Alice'))  # Hello, Alice!
 </code></pre>
-    </li>
-    <li>
-      <strong>How do you import modules in Python?</strong>
-      <ul>
-        <li>Use the <code>import</code> statement followed by the module name.</li>
-        <li>To import a specific function or class, use <code>from module_name import name</code>.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>import math
+      </li>
+      <li>
+        <strong>How do you import modules in Python?</strong>
+        <ul>
+          <li>Use the <code>import</code> statement followed by the module name.</li>
+          <li>To import a specific function or class, use <code>from module_name import name</code>.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>import math
   print(math.sqrt(16))  # 4.0
   
   from datetime import datetime
   print(datetime.now())
 </code></pre>
-    </li>
-    <li>
-      <strong>What is Python’s pip and virtual environment?</strong>
-      <ul>
-        <li><b>pip:</b> Python’s package manager. Used to install and manage packages.</li>
-        <li><b>Virtual Environment:</b> A self-contained directory that contains a Python installation and packages. Isolates project dependencies.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code># Create a virtual environment
+      </li>
+      <li>
+        <strong>What is Python’s pip and virtual environment?</strong>
+        <ul>
+          <li><b>pip:</b> Python’s package manager. Used to install and manage packages.</li>
+          <li><b>Virtual Environment:</b> A self-contained directory that contains a Python installation and packages. Isolates project dependencies.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code># Create a virtual environment
   python -m venv myenv
   
   # Activate the virtual environment
@@ -253,15 +255,15 @@ outer()  # Output: local
   # Install a package using pip
   pip install requests
 </code></pre>
-    </li>
-    <li>
-      <strong>How do you handle exceptions in Python?</strong>
-      <ul>
-        <li>Use <code>try</code> and <code>except</code> blocks to catch and handle exceptions.</li>
-        <li>Optionally, use <code>finally</code> block for cleanup actions.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>try:
+      </li>
+      <li>
+        <strong>How do you handle exceptions in Python?</strong>
+        <ul>
+          <li>Use <code>try</code> and <code>except</code> blocks to catch and handle exceptions.</li>
+          <li>Optionally, use <code>finally</code> block for cleanup actions.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>try:
     x = 1 / 0
 except ZeroDivisionError as e:
     print(f'Error: {e}')
@@ -270,26 +272,26 @@ finally:
 # Output: Error: division by zero
 #         Cleanup actions here.
 </code></pre>
-    </li>
-    <li>
-      <strong>What are Python’s built-in exceptions?</strong>
-      <ul>
-        <li><b>Exception:</b> Base class for all exceptions.</li>
-        <li><b>ZeroDivisionError:</b> Division by zero.</li>
-        <li><b>FileNotFoundError:</b> File or directory not found.</li>
-        <li><b>ValueError:</b> Invalid value.</li>
-        <li><b>TypeError:</b> Inappropriate type.</li>
-        <li>And many more...</li>
-      </ul>
-    </li>
-    <li>
-      <strong>What is the difference between try-except, try-finally, and try-except-finally?</strong>
-      <ul>
-        <li><b>try-except:</b> Catches and handles exceptions.</li>
-        <li><b>try-finally:</b> Executes the finally block after the try block, regardless of exceptions.</li>
-        <li><b>try-except-finally:</b> Catches exceptions and also executes the finally block.</li>
-      </ul>
-      <pre><code>try:
+      </li>
+      <li>
+        <strong>What are Python’s built-in exceptions?</strong>
+        <ul>
+          <li><b>Exception:</b> Base class for all exceptions.</li>
+          <li><b>ZeroDivisionError:</b> Division by zero.</li>
+          <li><b>FileNotFoundError:</b> File or directory not found.</li>
+          <li><b>ValueError:</b> Invalid value.</li>
+          <li><b>TypeError:</b> Inappropriate type.</li>
+          <li>And many more...</li>
+        </ul>
+      </li>
+      <li>
+        <strong>What is the difference between try-except, try-finally, and try-except-finally?</strong>
+        <ul>
+          <li><b>try-except:</b> Catches and handles exceptions.</li>
+          <li><b>try-finally:</b> Executes the finally block after the try block, regardless of exceptions.</li>
+          <li><b>try-except-finally:</b> Catches exceptions and also executes the finally block.</li>
+        </ul>
+        <pre><code>try:
     x = 1 / 0
 except ZeroDivisionError:
     print('Caught division by zero!')
@@ -298,15 +300,15 @@ finally:
 # Output: Caught division by zero!
 #         This always runs.
 </code></pre>
-    </li>
-    <li>
-      <strong>What are Python generators and iterators?</strong>
-      <ul>
-        <li><b>Iterator:</b> An object that implements the iterator protocol: <code>__iter__()</code> and <code>__next__()</code> methods.</li>
-        <li><b>Generator:</b> A special type of iterator defined with a function that contains <code>yield</code> expressions.</li>
-        <li>Generators are iterators, but not all iterators are generators.</li>
-      </ul>
-      <pre><code# Iterator example
+      </li>
+      <li>
+        <strong>What are Python generators and iterators?</strong>
+        <ul>
+          <li><b>Iterator:</b> An object that implements the iterator protocol: <code>__iter__()</code> and <code>__next__()</code> methods.</li>
+          <li><b>Generator:</b> A special type of iterator defined with a function that contains <code>yield</code> expressions.</li>
+          <li>Generators are iterators, but not all iterators are generators.</li>
+        </ul>
+        <pre><code# Iterator example
   class MyIterator:
       def __init__(self, limit):
           self.limit = limit
@@ -342,15 +344,15 @@ finally:
   #         1
   #         2
 </code></pre>
-    </li>
-    <li>
-      <strong>What is the difference between iterators and iterables?</strong>
-      <ul>
-        <li><b>Iterable:</b> An object that can return an iterator. Implements the <code>__iter__()</code> method.</li>
-        <li><b>Iterator:</b> An object that represents a stream of data. Implements the <code>__next__()</code> method.</li>
-        <li>All iterators are iterables, but not all iterables are iterators.</li>
-      </ul>
-      <pre><code>my_list = [1, 2, 3]
+      </li>
+      <li>
+        <strong>What is the difference between iterators and iterables?</strong>
+        <ul>
+          <li><b>Iterable:</b> An object that can return an iterator. Implements the <code>__iter__()</code> method.</li>
+          <li><b>Iterator:</b> An object that represents a stream of data. Implements the <code>__next__()</code> method.</li>
+          <li>All iterators are iterables, but not all iterables are iterators.</li>
+        </ul>
+        <pre><code>my_list = [1, 2, 3]
   my_iter = iter(my_list)  # Get an iterator from the list
   
   print(next(my_iter))  # 1
@@ -358,15 +360,15 @@ finally:
   print(next(my_iter))  # 3
   # print(next(my_iter))  # Raises StopIteration
 </code></pre>
-    </li>
-    <li>
-      <strong>What are Python context managers and the with statement?</strong>
-      <ul>
-        <li>A context manager is an object that defines <code>__enter__()</code> and <code>__exit__()</code> methods.</li>
-        <li>The <code>with</code> statement is used to simplify the use of context managers.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>class MyContextManager:
+      </li>
+      <li>
+        <strong>What are Python context managers and the with statement?</strong>
+        <ul>
+          <li>A context manager is an object that defines <code>__enter__()</code> and <code>__exit__()</code> methods.</li>
+          <li>The <code>with</code> statement is used to simplify the use of context managers.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>class MyContextManager:
     def __enter__(self):
         print('Entering the context.')
         return self
@@ -380,23 +382,23 @@ finally:
   #         Inside the context.
   #         Exiting the context.
 </code></pre>
-    </li>
-    <li>
-      <strong>What are Python’s magic methods (dunder methods)?</strong>
-      <ul>
-        <li>Magic methods are special methods with double underscores at the beginning and end of their names.</li>
-        <li>They allow you to define the behavior of your objects for built-in operations (e.g., addition, string representation).</li>
-        <li>Examples: <code>__init__</code>, <code>__str__</code>, <code>__repr__</code>, <code>__add__</code>, <code>__len__</code>, etc.</li>
-      </ul>
-    </li>
-    <li>
-      <strong>How do you use __str__() and __repr__()?</strong>
-      <ul>
-        <li><code>__str__()</code>: Defines the informal or user-friendly string representation of an object. Used by the <code>print()</code> function.</li>
-        <li><code>__repr__()</code>: Defines the formal string representation of an object. Used by the <code>repr()</code> function and in debugging.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>class Point:
+      </li>
+      <li>
+        <strong>What are Python’s magic methods (dunder methods)?</strong>
+        <ul>
+          <li>Magic methods are special methods with double underscores at the beginning and end of their names.</li>
+          <li>They allow you to define the behavior of your objects for built-in operations (e.g., addition, string representation).</li>
+          <li>Examples: <code>__init__</code>, <code>__str__</code>, <code>__repr__</code>, <code>__add__</code>, <code>__len__</code>, etc.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>How do you use __str__() and __repr__()?</strong>
+        <ul>
+          <li><code>__str__()</code>: Defines the informal or user-friendly string representation of an object. Used by the <code>print()</code> function.</li>
+          <li><code>__repr__()</code>: Defines the formal string representation of an object. Used by the <code>repr()</code> function and in debugging.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>class Point:
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -411,15 +413,15 @@ finally:
   print(p)          # Point(2, 3)
   print(repr(p))   # Point(2, 3)
 </code></pre>
-    </li>
-    <li>
-      <strong>What is the difference between == and is in Python?</strong>
-      <ul>
-        <li><b>==</b> checks for value equality. Do the objects have the same value?</li>
-        <li><b>is</b> checks for identity. Do the objects refer to the same memory location?</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>a = [1, 2, 3]
+      </li>
+      <li>
+        <strong>What is the difference between == and is in Python?</strong>
+        <ul>
+          <li><b>==</b> checks for value equality. Do the objects have the same value?</li>
+          <li><b>is</b> checks for identity. Do the objects refer to the same memory location?</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>a = [1, 2, 3]
   b = a
   c = a[:]
   
@@ -428,15 +430,15 @@ finally:
   print(a == c)  # True
   print(a is c)  # False
 </code></pre>
-    </li>
-    <li>
-      <strong>What is Python’s pass statement?</strong>
-      <ul>
-        <li>The <code>pass</code> statement is a no-operation statement. It does nothing when executed.</li>
-        <li>Used as a placeholder in loops, functions, classes, or conditionals where syntactically some code is required but no action is desired.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>for i in range(5):
+      </li>
+      <li>
+        <strong>What is Python’s pass statement?</strong>
+        <ul>
+          <li>The <code>pass</code> statement is a no-operation statement. It does nothing when executed.</li>
+          <li>Used as a placeholder in loops, functions, classes, or conditionals where syntactically some code is required but no action is desired.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>for i in range(5):
     if i == 3:
         pass  # Placeholder, do nothing
     print(i)
@@ -446,16 +448,16 @@ finally:
 #         3
 #         4
 </code></pre>
-    </li>
-    <li>
-      <strong>What is Python’s yield statement?</strong>
-      <ul>
-        <li>The <code>yield</code> statement is used in a function to make it a generator.</li>
-        <li>When the function is called, it returns a generator object without executing the function body.</li>
-        <li>Each call to the generator’s <code>__next__()</code> method resumes the function from the last <code>yield</code> statement.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>def countdown(n):
+      </li>
+      <li>
+        <strong>What is Python’s yield statement?</strong>
+        <ul>
+          <li>The <code>yield</code> statement is used in a function to make it a generator.</li>
+          <li>When the function is called, it returns a generator object without executing the function body.</li>
+          <li>Each call to the generator’s <code>__next__()</code> method resumes the function from the last <code>yield</code> statement.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>def countdown(n):
     while n > 0:
         yield n
         n -= 1
@@ -468,15 +470,15 @@ finally:
   #         2
   #         1
 </code></pre>
-    </li>
-    <li>
-      <strong>What are Python’s comprehensions (list, dict, set, generator)?</strong>
-      <ul>
-        <li>Comprehensions are concise ways to create collections (lists, dictionaries, sets) from other iterables.</li>
-        <li>Use a single line of code with a compact syntax.</li>
-        <li>Examples:</li>
-      </ul>
-      <pre><code># List comprehension
+      </li>
+      <li>
+        <strong>What are Python’s comprehensions (list, dict, set, generator)?</strong>
+        <ul>
+          <li>Comprehensions are concise ways to create collections (lists, dictionaries, sets) from other iterables.</li>
+          <li>Use a single line of code with a compact syntax.</li>
+          <li>Examples:</li>
+        </ul>
+        <pre><code># List comprehension
   squares = [x ** 2 for x in range(10)]
   
   # Dictionary comprehension
@@ -488,15 +490,15 @@ finally:
   # Generator comprehension
   square_gen = (x ** 2 for x in range(10))
 </code></pre>
-    </li>
-    <li>
-      <strong>What is the difference between global and nonlocal keywords?</strong>
-      <ul>
-        <li><b>global</b> declares a variable as global, meaning it exists at the module level. Use to read or modify global variables.</li>
-        <li><b>nonlocal</b> declares a variable as nonlocal, meaning it exists in an enclosing (but not global) scope. Use in nested functions.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>x = 'global'
+      </li>
+      <li>
+        <strong>What is the difference between global and nonlocal keywords?</strong>
+        <ul>
+          <li><b>global</b> declares a variable as global, meaning it exists at the module level. Use to read or modify global variables.</li>
+          <li><b>nonlocal</b> declares a variable as nonlocal, meaning it exists in an enclosing (but not global) scope. Use in nested functions.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>x = 'global'
   
   def outer():
       x = 'enclosing'
@@ -513,16 +515,16 @@ finally:
   # Output: modified
   #         modified
 </code></pre>
-    </li>
-    <li>
-      <strong>What are Python’s data classes?</strong>
-      <ul>
-        <li>Data classes are a way to define classes that are primarily used to store data with minimal boilerplate code.</li>
-        <li>Defined using the <code>@dataclass</code> decorator from the <code>dataclasses</code> module.</li>
-        <li>Automatically generate special methods like <code>__init__</code>, <code>__repr__</code>, <code>__eq__</code>, etc.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>from dataclasses import dataclass
+      </li>
+      <li>
+        <strong>What are Python’s data classes?</strong>
+        <ul>
+          <li>Data classes are a way to define classes that are primarily used to store data with minimal boilerplate code.</li>
+          <li>Defined using the <code>@dataclass</code> decorator from the <code>dataclasses</code> module.</li>
+          <li>Automatically generate special methods like <code>__init__</code>, <code>__repr__</code>, <code>__eq__</code>, etc.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>from dataclasses import dataclass
   
   @dataclass
   class Point:
@@ -534,15 +536,15 @@ finally:
   print(p1)  # Point(x=2, y=3)
   print(p1 == p2)  # False
 </code></pre>
-    </li>
-    <li>
-      <strong>What is the difference between mutable and immutable default arguments?</strong>
-      <ul>
-        <li>Mutable default arguments (e.g., lists, dictionaries) can be changed after function definition. Shared across all calls.</li>
-        <li>Immutable default arguments (e.g., integers, strings, tuples) cannot be changed. Unique to each function call.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>def append_to(element, to=[]):
+      </li>
+      <li>
+        <strong>What is the difference between mutable and immutable default arguments?</strong>
+        <ul>
+          <li>Mutable default arguments (e.g., lists, dictionaries) can be changed after function definition. Shared across all calls.</li>
+          <li>Immutable default arguments (e.g., integers, strings, tuples) cannot be changed. Unique to each function call.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>def append_to(element, to=[]):
     to.append(element)
     return to
   
@@ -555,15 +557,15 @@ finally:
   print(add_to(5))  # 5
   print(add_to(5, 10))  # 15
 </code></pre>
-    </li>
-    <li>
-      <strong>What is Python’s property() function?</strong>
-      <ul>
-        <li>The <code>property()</code> function returns a property attribute for a given attribute name.</li>
-        <li>Used to manage the access and modification of an attribute’s value.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>class Person:
+      </li>
+      <li>
+        <strong>What is Python’s property() function?</strong>
+        <ul>
+          <li>The <code>property()</code> function returns a property attribute for a given attribute name.</li>
+          <li>Used to manage the access and modification of an attribute’s value.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>class Person:
     def __init__(self, name):
         self._name = name
     
@@ -580,16 +582,16 @@ finally:
   p.name = 'bob'
   print(p.name)  # Bob
 </code></pre>
-    </li>
-    <li>
-      <strong>What is Python’s method resolution order (MRO)?</strong>
-      <ul>
-        <li>MRO is the order in which base classes are searched when looking up a method.</li>
-        <li>Determines the sequence of method calls in case of method overriding in derived classes.</li>
-        <li>Can be viewed using the <code>__mro__</code> attribute or the <code>mro()</code> method of a class.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>class A:
+      </li>
+      <li>
+        <strong>What is Python’s method resolution order (MRO)?</strong>
+        <ul>
+          <li>MRO is the order in which base classes are searched when looking up a method.</li>
+          <li>Determines the sequence of method calls in case of method overriding in derived classes.</li>
+          <li>Can be viewed using the <code>__mro__</code> attribute or the <code>mro()</code> method of a class.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>class A:
     def greet(self):
         return 'Hello from A'
   
@@ -607,15 +609,15 @@ finally:
   print(D.mro())
   # Output: [<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>]
 </code></pre>
-    </li>
-    <li>
-      <strong>How does Python support multiple inheritance?</strong>
-      <ul>
-        <li>Python supports multiple inheritance, allowing a class to inherit from multiple base classes.</li>
-        <li>Method Resolution Order (MRO) determines the order of method and attribute resolution.</li>
-        <li>Use caution to avoid complexity and ambiguity (e.g., the Diamond Problem).</li>
-      </ul>
-      <pre><code>class A:
+      </li>
+      <li>
+        <strong>How does Python support multiple inheritance?</strong>
+        <ul>
+          <li>Python supports multiple inheritance, allowing a class to inherit from multiple base classes.</li>
+          <li>Method Resolution Order (MRO) determines the order of method and attribute resolution.</li>
+          <li>Use caution to avoid complexity and ambiguity (e.g., the Diamond Problem).</li>
+        </ul>
+        <pre><code>class A:
     def greet(self):
         return 'Hello from A'
   
@@ -635,15 +637,15 @@ finally:
   print(D.mro())
   # Output: [<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>]
 </code></pre>
-    </li>
-    <li>
-      <strong>What is monkey patching in Python?</strong>
-      <ul>
-        <li>Monkey patching is the dynamic modification of a class or module at runtime.</li>
-        <li>Used to change or extend the behavior of libraries or frameworks without modifying the source code.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>import math
+      </li>
+      <li>
+        <strong>What is monkey patching in Python?</strong>
+        <ul>
+          <li>Monkey patching is the dynamic modification of a class or module at runtime.</li>
+          <li>Used to change or extend the behavior of libraries or frameworks without modifying the source code.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>import math
   
   print(math.sqrt(16))  # 4.0
   
@@ -653,15 +655,15 @@ finally:
   math.sqrt = new_sqrt
   print(math.sqrt(16))  # Not a perfect square
 </code></pre>
-    </li>
-    <li>
-      <strong>What is the difference between shallow and deep equality of objects?</strong>
-      <ul>
-        <li><b>Shallow Equality:</b> Checks if two objects have the same value or content. For collections, checks if they contain the same elements.</li>
-        <li><b>Deep Equality:</b> Checks if two objects are identical in terms of value and structure. For collections, checks recursively.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>list1 = [1, 2, 3]
+      </li>
+      <li>
+        <strong>What is the difference between shallow and deep equality of objects?</strong>
+        <ul>
+          <li><b>Shallow Equality:</b> Checks if two objects have the same value or content. For collections, checks if they contain the same elements.</li>
+          <li><b>Deep Equality:</b> Checks if two objects are identical in terms of value and structure. For collections, checks recursively.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>list1 = [1, 2, 3]
   list2 = [1, 2, 3]
   list3 = list1
   
@@ -669,16 +671,16 @@ finally:
   print(list1 is list2)  # False (different objects)
   print(list1 is list3)  # True (same object)
 </code></pre>
-    </li>
-    <li>
-      <strong>How do you implement abstract classes in Python?</strong>
-      <ul>
-        <li>Use the <code>abc</code> module to define abstract base classes (ABCs).</li>
-        <li>Decorate the class with <code>@abstractmethod</code> to declare abstract methods.</li>
-        <li>Subclasses must implement all abstract methods to be instantiated.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>from abc import ABC, abstractmethod
+      </li>
+      <li>
+        <strong>How do you implement abstract classes in Python?</strong>
+        <ul>
+          <li>Use the <code>abc</code> module to define abstract base classes (ABCs).</li>
+          <li>Decorate the class with <code>@abstractmethod</code> to declare abstract methods.</li>
+          <li>Subclasses must implement all abstract methods to be instantiated.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>from abc import ABC, abstractmethod
   
   class Animal(ABC):
       @abstractmethod
@@ -698,15 +700,15 @@ finally:
   print(dog.sound())  # Woof
   print(cat.sound())  # Meow
 </code></pre>
-    </li>
-    <li>
-      <strong>How do you implement interfaces in Python?</strong>
-      <ul>
-        <li>Python does not have a formal interface keyword or mechanism.</li>
-        <li>Interfaces can be implemented using abstract base classes (ABCs) with abstract methods.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>from abc import ABC, abstractmethod
+      </li>
+      <li>
+        <strong>How do you implement interfaces in Python?</strong>
+        <ul>
+          <li>Python does not have a formal interface keyword or mechanism.</li>
+          <li>Interfaces can be implemented using abstract base classes (ABCs) with abstract methods.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>from abc import ABC, abstractmethod
   
   class Drawable(ABC):
       @abstractmethod
@@ -724,15 +726,15 @@ finally:
   c = Circle()
   print(c.draw())  # Drawing a circle
 </code></pre>
-    </li>
-    <li>
-      <strong>How is Python used to interact with SQL databases?</strong>
-      <ul>
-        <li>Python provides libraries and modules (e.g., <code>sqlite3</code>, <code>SQLAlchemy</code>) to interact with SQL databases.</li>
-        <li>Use SQL queries to perform operations like SELECT, INSERT, UPDATE, DELETE.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>import sqlite3
+      </li>
+      <li>
+        <strong>How is Python used to interact with SQL databases?</strong>
+        <ul>
+          <li>Python provides libraries and modules (e.g., <code>sqlite3</code>, <code>SQLAlchemy</code>) to interact with SQL databases.</li>
+          <li>Use SQL queries to perform operations like SELECT, INSERT, UPDATE, DELETE.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>import sqlite3
   
   # Connect to a database (or create one)
   conn = sqlite3.connect('example.db')
@@ -750,22 +752,22 @@ finally:
   # Close the connection
   conn.close()
 </code></pre>
-    </li>
-    <li>
-      <strong>What is an ORM? Name some Python ORMs.</strong>
-      <ul>
-        <li>An ORM (Object-Relational Mapping) is a programming technique that converts data between incompatible type systems (e.g., Python objects and SQL tables).</li>
-        <li>Some Python ORMs: <code>SQLAlchemy</code>, <code>Django ORM</code>, <code>Peewee</code>, <code>Tortoise-ORM</code>.</li>
-      </ul>
-    </li>
-    <li>
-      <strong>What is SQLAlchemy and how does it map classes to tables?</strong>
-      <ul>
-        <li>SQLAlchemy is a popular SQL toolkit and ORM for Python.</li>
-        <li>It uses declarative mapping to define classes that map to database tables.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>from sqlalchemy import create_engine, Column, Integer, String
+      </li>
+      <li>
+        <strong>What is an ORM? Name some Python ORMs.</strong>
+        <ul>
+          <li>An ORM (Object-Relational Mapping) is a programming technique that converts data between incompatible type systems (e.g., Python objects and SQL tables).</li>
+          <li>Some Python ORMs: <code>SQLAlchemy</code>, <code>Django ORM</code>, <code>Peewee</code>, <code>Tortoise-ORM</code>.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>What is SQLAlchemy and how does it map classes to tables?</strong>
+        <ul>
+          <li>SQLAlchemy is a popular SQL toolkit and ORM for Python.</li>
+          <li>It uses declarative mapping to define classes that map to database tables.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>from sqlalchemy import create_engine, Column, Integer, String
   from sqlalchemy.ext.declarative import declarative_base
   from sqlalchemy.orm import sessionmaker
   
@@ -789,14 +791,14 @@ finally:
   # Create the table in the database
   Base.metadata.create_all(engine)
 </code></pre>
-    </li>
-    <li>
-      <strong>How do you perform CRUD operations in Python using ORM?</strong>
-      <ul>
-        <li>CRUD operations can be performed using ORM session methods: <code>add()</code>, <code>commit()</code>, <code>query()</code>, <code>delete()</code>, etc.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code># Create a new user
+      </li>
+      <li>
+        <strong>How do you perform CRUD operations in Python using ORM?</strong>
+        <ul>
+          <li>CRUD operations can be performed using ORM session methods: <code>add()</code>, <code>commit()</code>, <code>query()</code>, <code>delete()</code>, etc.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code># Create a new user
   new_user = User(name='Alice', age=30)
   session.add(new_user)
   session.commit()
@@ -816,15 +818,15 @@ finally:
   session.delete(user_to_delete)
   session.commit()
 </code></pre>
-    </li>
-    <li>
-      <strong>What is the difference between fetchone, fetchall, and fetchmany in Python DB API?</strong>
-      <ul>
-        <li><b>fetchone:</b> Fetches the next row of a query result set, returning a single sequence, or <code>None</code> when no more rows are available.</li>
-        <li><b>fetchall:</b> Fetches all (remaining) rows of a query result, returning a list. An empty list is returned when no more rows are available.</li>
-        <li><b>fetchmany:</b> Fetches the next set of <code>size</code> rows of a query result, returning a list. A smaller list is returned if there are not enough remaining rows.</li>
-      </ul>
-      <pre><code# Assuming a cursor object "cursor" is already created
+      </li>
+      <li>
+        <strong>What is the difference between fetchone, fetchall, and fetchmany in Python DB API?</strong>
+        <ul>
+          <li><b>fetchone:</b> Fetches the next row of a query result set, returning a single sequence, or <code>None</code> when no more rows are available.</li>
+          <li><b>fetchall:</b> Fetches all (remaining) rows of a query result, returning a list. An empty list is returned when no more rows are available.</li>
+          <li><b>fetchmany:</b> Fetches the next set of <code>size</code> rows of a query result, returning a list. A smaller list is returned if there are not enough remaining rows.</li>
+        </ul>
+        <pre><code# Assuming a cursor object "cursor" is already created
   cursor.execute('SELECT * FROM users')
   
   # Fetch one row
@@ -839,14 +841,14 @@ finally:
   two_users = cursor.fetchmany(2)
   print(two_users)
 </code></pre>
-    </li>
-    <li>
-      <strong>How do you handle transactions in Python with databases?</strong>
-      <ul>
-        <li>Transactions are handled using the <code>commit()</code> and <code>rollback()</code> methods of a database connection.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code># Start a transaction
+      </li>
+      <li>
+        <strong>How do you handle transactions in Python with databases?</strong>
+        <ul>
+          <li>Transactions are handled using the <code>commit()</code> and <code>rollback()</code> methods of a database connection.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code># Start a transaction
   connection.begin()
   
   try:
@@ -860,35 +862,35 @@ finally:
       connection.rollback()
       raise
 </code></pre>
-    </li>
-    <li>
-      <strong>How do you prevent SQL injection in Python?</strong>
-      <ul>
-        <li>Use parameterized queries or prepared statements. Do not concatenate or interpolate user inputs directly into SQL queries.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>user_id = 1
+      </li>
+      <li>
+        <strong>How do you prevent SQL injection in Python?</strong>
+        <ul>
+          <li>Use parameterized queries or prepared statements. Do not concatenate or interpolate user inputs directly into SQL queries.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>user_id = 1
   cursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))
   user = cursor.fetchone()
 </code></pre>
-    </li>
-    <li>
-      <strong>What is the difference between Python’s sqlite3 and SQLAlchemy?</strong>
-      <ul>
-        <li><b>sqlite3:</b> A C library that provides a lightweight, disk-based database. Python’s built-in module to work with SQLite databases.</li>
-        <li><b>SQLAlchemy:</b> A SQL toolkit and ORM for Python. Provides a full suite of well-known enterprise-level persistence patterns.</li>
-        <li>Use <code>sqlite3</code> for simple, lightweight database tasks. Use <code>SQLAlchemy</code> for complex applications requiring advanced ORM capabilities.</li>
-      </ul>
-    </li>
-    <li>
-      <strong>How do you use Python with PostgreSQL or MySQL?</strong>
-      <ul>
-        <li>Use the appropriate database adapter (e.g., <code>psycopg2</code> for PostgreSQL, <code>mysql-connector-python</code> for MySQL).</li>
-        <li>Establish a connection using the adapter’s connect() function.</li>
-        <li>Create a cursor object and execute SQL queries.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code># PostgreSQL example
+      </li>
+      <li>
+        <strong>What is the difference between Python’s sqlite3 and SQLAlchemy?</strong>
+        <ul>
+          <li><b>sqlite3:</b> A C library that provides a lightweight, disk-based database. Python’s built-in module to work with SQLite databases.</li>
+          <li><b>SQLAlchemy:</b> A SQL toolkit and ORM for Python. Provides a full suite of well-known enterprise-level persistence patterns.</li>
+          <li>Use <code>sqlite3</code> for simple, lightweight database tasks. Use <code>SQLAlchemy</code> for complex applications requiring advanced ORM capabilities.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>How do you use Python with PostgreSQL or MySQL?</strong>
+        <ul>
+          <li>Use the appropriate database adapter (e.g., <code>psycopg2</code> for PostgreSQL, <code>mysql-connector-python</code> for MySQL).</li>
+          <li>Establish a connection using the adapter’s connect() function.</li>
+          <li>Create a cursor object and execute SQL queries.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code># PostgreSQL example
   import psycopg2
   
   conn = psycopg2.connect("dbname=test user=postgres password=secret")
@@ -904,14 +906,14 @@ finally:
   cursor.execute('SELECT * FROM users')
   users = cursor.fetchall()
 </code></pre>
-    </li>
-    <li>
-      <strong>How do you connect Python objects to SQL foreign key relationships?</strong>
-      <ul>
-        <li>Define the foreign key relationship in the database schema using SQLAlchemy’s relationship() function.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>class User(Base):
+      </li>
+      <li>
+        <strong>How do you connect Python objects to SQL foreign key relationships?</strong>
+        <ul>
+          <li>Define the foreign key relationship in the database schema using SQLAlchemy’s relationship() function.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>class User(Base):
       __tablename__ = 'users'
       
       id = Column(Integer, primary_key=True)
@@ -929,15 +931,15 @@ finally:
   
   User.posts = relationship('Post', order_by=Post.id, back_populates='user')
 </code></pre>
-    </li>
-    <li>
-      <strong>What is Python’s pickle module? When is it used?</strong>
-      <ul>
-        <li>The <code>pickle</code> module serializes and deserializes Python objects, converting them to and from byte streams.</li>
-        <li>Used to save Python objects to a file or transmit them over a network.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>import pickle
+      </li>
+      <li>
+        <strong>What is Python’s pickle module? When is it used?</strong>
+        <ul>
+          <li>The <code>pickle</code> module serializes and deserializes Python objects, converting them to and from byte streams.</li>
+          <li>Used to save Python objects to a file or transmit them over a network.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>import pickle
   
   # Serialize an object
   data = {'name': 'Alice', 'age': 30}
@@ -949,34 +951,34 @@ finally:
       loaded_data = pickle.load(file)
   print(loaded_data)
 </code></pre>
-    </li>
-    <li>
-      <strong>What is the difference between Python’s json and pickle?</strong>
-      <ul>
-        <li><b>json:</b> A text-based format for serializing structured data. Human-readable and language-independent.</li>
-        <li><b>pickle:</b> A binary format for serializing Python objects. Not human-readable and Python-specific.</li>
-        <li>Use <code>json</code> for interoperability with other languages and systems. Use <code>pickle</code> for Python-specific object serialization.</li>
-      </ul>
-    </li>
-    <li>
-      <strong>What are Python’s built-in functions you use often?</strong>
-      <ul>
-        <li><b>print():</b> Outputs data to the console.</li>
-        <li><b>len():</b> Returns the length of an object (e.g., string, list, tuple).</li>
-        <li><b>range():</b> Generates a sequence of numbers.</li>
-        <li><b>enumerate():</b> Adds a counter to an iterable and returns it as an enumerate object.</li>
-        <li><b>zip():</b> Combines multiple iterables into a single iterator of tuples.</li>
-        <li>And many more...</li>
-      </ul>
-    </li>
-    <li>
-      <strong>What is Python’s map, filter, and reduce?</strong>
-      <ul>
-        <li><b>map:</b> Applies a given function to all items in an input list (or any iterable).</li>
-        <li><b>filter:</b> Creates a list of elements for which a given function returns true.</li>
-        <li><b>reduce:</b> Applies a rolling computation to sequential pairs of values in a list (or any iterable).</li>
-      </ul>
-      <pre><code>from functools import reduce
+      </li>
+      <li>
+        <strong>What is the difference between Python’s json and pickle?</strong>
+        <ul>
+          <li><b>json:</b> A text-based format for serializing structured data. Human-readable and language-independent.</li>
+          <li><b>pickle:</b> A binary format for serializing Python objects. Not human-readable and Python-specific.</li>
+          <li>Use <code>json</code> for interoperability with other languages and systems. Use <code>pickle</code> for Python-specific object serialization.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>What are Python’s built-in functions you use often?</strong>
+        <ul>
+          <li><b>print():</b> Outputs data to the console.</li>
+          <li><b>len():</b> Returns the length of an object (e.g., string, list, tuple).</li>
+          <li><b>range():</b> Generates a sequence of numbers.</li>
+          <li><b>enumerate():</b> Adds a counter to an iterable and returns it as an enumerate object.</li>
+          <li><b>zip():</b> Combines multiple iterables into a single iterator of tuples.</li>
+          <li>And many more...</li>
+        </ul>
+      </li>
+      <li>
+        <strong>What is Python’s map, filter, and reduce?</strong>
+        <ul>
+          <li><b>map:</b> Applies a given function to all items in an input list (or any iterable).</li>
+          <li><b>filter:</b> Creates a list of elements for which a given function returns true.</li>
+          <li><b>reduce:</b> Applies a rolling computation to sequential pairs of values in a list (or any iterable).</li>
+        </ul>
+        <pre><code>from functools import reduce
   
   # Double all numbers in a list
   nums = [1, 2, 3, 4]
@@ -988,29 +990,30 @@ finally:
   # Compute the product of all numbers
   product = reduce(lambda x, y: x * y, nums)
 </code></pre>
-    </li>
-    <li>
-      <strong>What is Python’s zip() function?</strong>
-      <ul>
-        <li>The <code>zip()</code> function takes iterables (e.g., lists, tuples) as arguments and returns an iterator of tuples.</li>
-        <li>Each tuple contains the elements from the input iterables at the same position.</li>
-        <li>Example:</li>
-      </ul>
-      <pre><code>names = ['Alice', 'Bob', 'Charlie']
+      </li>
+      <li>
+        <strong>What is Python’s zip() function?</strong>
+        <ul>
+          <li>The <code>zip()</code> function takes iterables (e.g., lists, tuples) as arguments and returns an iterator of tuples.</li>
+          <li>Each tuple contains the elements from the input iterables at the same position.</li>
+          <li>Example:</li>
+        </ul>
+        <pre><code>names = ['Alice', 'Bob', 'Charlie']
   ages = [25, 30, 35]
   
   combined = list(zip(names, ages))
   print(combined)
   # Output: [('Alice', 25), ('Bob', 30), ('Charlie', 35)]
 </code></pre>
-    </li>
-    <li>
-      <strong>What is the difference between Python range and xrange?</strong>
-      <ul>
-        <li><b>range:</b> Returns a range object (an immutable sequence type) in Python 3. Equivalent to xrange in Python 2.</li>
-        <li><b>xrange:</b> Returns an xrange object (a lazy sequence) in Python 2. Does not exist in Python 3.</li>
-        <li>Use <code>range()</code> in Python 3 for iterating over sequences. Use <code>list(range())</code> to get a list of numbers.</li>
-      </ul>
-    </li>
-  </ol>
+      </li>
+      <li>
+        <strong>What is the difference between Python range and xrange?</strong>
+        <ul>
+          <li><b>range:</b> Returns a range object (an immutable sequence type) in Python 3. Equivalent to xrange in Python 2.</li>
+          <li><b>xrange:</b> Returns an xrange object (a lazy sequence) in Python 2. Does not exist in Python 3.</li>
+          <li>Use <code>range()</code> in Python 3 for iterating over sequences. Use <code>list(range())</code> to get a list of numbers.</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
 </div>

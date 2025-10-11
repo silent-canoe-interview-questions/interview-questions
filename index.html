@@ -8,162 +8,48 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
-
-<header role="banner" tabindex="0" aria-label="Interview Prep Dashboard">
+<header>
   <span class="site-title">Interview Prep <span class="site-title-accent">Dashboard</span></span>
 </header>
-<nav class="sidebar" aria-label="Main topics">
-  <button class="sidebar-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar-list">
-    <span class="hamburger"></span>
-  </button>
-  <ul id="sidebar-list" role="menu">
-    <li><a href="Pages/oops-all-interview-questions.html" role="menuitem">OOP Concepts</a></li>
-    <li><a href="Pages/python-all-interview-questions.html" role="menuitem">Python Questions</a></li>
-    <li><a href="Pages/sql-all-interview-questions.html" role="menuitem">SQL Interview Questions & Optimization</a></li>
-    <li><a href="Pages/html-css-js-all-interview-questions.html" role="menuitem">HTML, CSS & JavaScript Questions</a></li>
-    <li><a href="Pages/hr-all-interview-questions.html" role="menuitem">HR & Behavioral Interview Questions</a></li>
-    <li><a href="Pages/ai-all-interview-questions.html" role="menuitem">AI/Generative-AI Questions</a></li>
+<button class="sidebar-toggle" aria-label="Open menu" aria-expanded="false">
+  <span class="hamburger"></span>
+</button>
+<nav class="sidebar">
+  <ul>
+    <li><a href="Pages/oops-all-interview-questions.html">OOP Concepts</a></li>
+    <li><a href="Pages/python-all-interview-questions.html">Python Questions</a></li>
+    <li><a href="Pages/sql-all-interview-questions.html">SQL Interview Questions</a></li>
+    <li><a href="Pages/html-css-js-all-interview-questions.html">HTML, CSS & JS</a></li>
+    <li><a href="Pages/hr-all-interview-questions.html">HR & Behavioral</a></li>
+    <li><a href="Pages/ai-all-interview-questions.html">AI/Generative-AI</a></li>
   </ul>
-  <div class="sidebar-overlay"></div>
 </nav>
-<div class="dashboard">
-  <div class="content" id="mainContent">
-    <h1>Welcome to Interview Prep!</h1>
-    <p>Select a topic from the left to start practicing real interview questions and exercises for Python, SQL, Web, AI, and HR rounds. All content is curated for clarity and relevance.</p>
-  </div>
-</div>
-
+<main>
+  <h1>Welcome to Interview Prep!</h1>
+  <p>Select a topic from the left to start practicing real interview questions and exercises. All content is curated for clarity and relevance.</p>
+</main>
 <footer>
-  <span class="footer-brand">&copy; 2025 Interview Prep</span> &mdash; Made with <span aria-label="love" class="footer-heart">&#10084;&#65039;</span> for learners
+  <span class="footer-brand">&copy; 2025 Interview Prep</span>
 </footer>
 <script>
-  // Toggle submenu and update ARIA attributes
-  const menuSpans = document.querySelectorAll('.sidebar li > span');
-  menuSpans.forEach(span => {
-    span.addEventListener('click', () => {
-      const parent = span.parentElement;
-      const expanded = parent.classList.toggle('active');
-      span.setAttribute('aria-expanded', expanded);
-    });
-    // Keyboard navigation for menu
-    span.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        span.click();
-      }
-      // Arrow down: focus first submenu link
-      if (e.key === 'ArrowDown') {
-        const submenu = span.parentElement.querySelector('.submenu');
-        if (submenu) {
-          const firstLink = submenu.querySelector('a');
-          if (firstLink) firstLink.focus();
-        }
-      }
-    });
-  });
-
-  // Load page content dynamically (works for local file:// and GitHub Pages)
-  const links = document.querySelectorAll('.sidebar a');
-  const mainContent = document.getElementById('mainContent');
-
-  function fetchPage(url, cb, fallbackLink) {
-    // For file:// protocol, use XMLHttpRequest fallback
-    if (window.location.protocol === 'file:') {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', url, true);
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-          if (xhr.status === 200 || xhr.status === 0) {
-            cb(xhr.responseText);
-          } else {
-            // If loading fails, open in new tab as fallback
-            if (fallbackLink) {
-              window.open(url, '_blank');
-            } else {
-              cb(`<h1>Error Loading Page</h1><p>${xhr.statusText}</p>`);
-            }
-          }
-        }
-      };
-      xhr.send();
-    } else {
-      fetch(url)
-        .then(response => response.text())
-        .then(cb)
-        .catch(err => {
-          cb(`<h1>Error Loading Page</h1><p>${err}</p>`);
-        });
-    }
+const sidebar = document.querySelector('.sidebar');
+const toggleBtn = document.querySelector('.sidebar-toggle');
+function handleSidebar() {
+  if (window.innerWidth <= 700) {
+    sidebar.style.transform = sidebar.classList.contains('open') ? 'translateX(0)' : 'translateX(-100%)';
+    toggleBtn.style.display = 'block';
+  } else {
+    sidebar.style.transform = 'none';
+    toggleBtn.style.display = 'none';
+    sidebar.classList.remove('open');
   }
-
-  links.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const url = link.getAttribute('href');
-      fetchPage(url, function(data) {
-        mainContent.innerHTML = data;
-        highlightActiveLink(link);
-      }, true);
-    });
-    // Keyboard navigation for links
-    link.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        const next = link.parentElement.nextElementSibling;
-        if (next) {
-          const nextLink = next.querySelector('a');
-          if (nextLink) nextLink.focus();
-        }
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        const prev = link.parentElement.previousElementSibling;
-        if (prev) {
-          const prevLink = prev.querySelector('a');
-          if (prevLink) prevLink.focus();
-        }
-      }
-    });
-  });
-
-  // Highlight active link
-  function highlightActiveLink(activeLink) {
-    links.forEach(l => l.classList.remove('active'));
-    activeLink.classList.add('active');
-  }
-
-  // Display user machine/browser info
-  const userInfoEl = document.getElementById('browserInfo');
-  const nav = window.navigator;
-  userInfoEl.innerHTML = `
-    Browser: ${nav.appName} <br>
-    Version: ${nav.appVersion} <br>
-    Platform: ${nav.platform} <br>
-    Language: ${nav.language} <br>
-    Cookies Enabled: ${nav.cookieEnabled} <br>
-    User Agent: ${nav.userAgent}
-  `;
-
-  // Sidebar mobile toggle
-  const sidebar = document.querySelector('.sidebar');
-  const toggleBtn = document.querySelector('.sidebar-toggle');
-  const sidebarList = document.getElementById('sidebar-list');
-  const sidebarOverlay = document.querySelector('.sidebar-overlay');
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
-      const expanded = sidebar.classList.contains('open');
-      toggleBtn.setAttribute('aria-expanded', expanded);
-      sidebarOverlay.style.display = expanded ? 'block' : 'none';
-    });
-  }
-  if (sidebarOverlay) {
-    sidebarOverlay.addEventListener('click', () => {
-      sidebar.classList.remove('open');
-      toggleBtn.setAttribute('aria-expanded', false);
-      sidebarOverlay.style.display = 'none';
-    });
-  }
+}
+window.addEventListener('resize', handleSidebar);
+document.addEventListener('DOMContentLoaded', handleSidebar);
+toggleBtn.addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  handleSidebar();
+});
 </script>
-
 </body>
 </html>

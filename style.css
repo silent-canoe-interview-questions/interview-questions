@@ -56,6 +56,15 @@ header {
   border-right: 1px solid #e0e0e0;
   padding: 12px 10px 12px 10px;
   box-shadow: 1px 0 3px rgba(0,0,0,0.03);
+  z-index: 1000;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.18);
+  z-index: 999;
 }
 
 .sidebar-search {
@@ -234,6 +243,10 @@ footer {
     position: absolute;
     left: 12px;
     top: 16px;
+    z-index: 1100;
+  }
+  .sidebar-search {
+    position: relative;
     z-index: 1100;
   }
   .dashboard {

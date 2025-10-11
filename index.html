@@ -12,21 +12,22 @@
 <header role="banner" tabindex="0" aria-label="Interview Prep Dashboard">
   <span class="site-title">Interview Prep <span class="site-title-accent">Dashboard</span></span>
 </header>
+<nav class="sidebar" aria-label="Main topics">
+  <button class="sidebar-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar-list">
+    <span class="hamburger"></span>
+  </button>
+  <input type="text" id="topicSearch" class="sidebar-search" placeholder="Search topics..." aria-label="Search topics">
+  <ul id="sidebar-list" role="menu">
+    <li><a href="Pages/oops-all-interview-questions.html" role="menuitem">OOP Concepts</a></li>
+    <li><a href="Pages/python-all-interview-questions.html" role="menuitem">Python Questions</a></li>
+    <li><a href="Pages/sql-all-interview-questions.html" role="menuitem">SQL Interview Questions & Optimization</a></li>
+    <li><a href="Pages/html-css-js-all-interview-questions.html" role="menuitem">HTML, CSS & JavaScript Questions</a></li>
+    <li><a href="Pages/hr-all-interview-questions.html" role="menuitem">HR & Behavioral Interview Questions</a></li>
+    <li><a href="Pages/ai-all-interview-questions.html" role="menuitem">AI/Generative-AI Questions</a></li>
+  </ul>
+  <div class="sidebar-overlay"></div>
+</nav>
 <div class="dashboard">
-  <nav class="sidebar" aria-label="Main topics">
-    <button class="sidebar-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar-list">
-      <span class="hamburger"></span>
-    </button>
-    <input type="text" id="topicSearch" class="sidebar-search" placeholder="Search topics..." aria-label="Search topics">
-    <ul id="sidebar-list" role="menu">
-      <li><a href="Pages/oops-all-interview-questions.html" role="menuitem">OOP Concepts</a></li>
-      <li><a href="Pages/python-all-interview-questions.html" role="menuitem">Python Questions</a></li>
-      <li><a href="Pages/sql-all-interview-questions.html" role="menuitem">SQL Interview Questions & Optimization</a></li>
-      <li><a href="Pages/html-css-js-all-interview-questions.html" role="menuitem">HTML, CSS & JavaScript Questions</a></li>
-      <li><a href="Pages/hr-all-interview-questions.html" role="menuitem">HR & Behavioral Interview Questions</a></li>
-      <li><a href="Pages/ai-all-interview-questions.html" role="menuitem">AI/Generative-AI Questions</a></li>
-    </ul>
-  </nav>
   <div class="content" id="mainContent">
     <h1>Welcome to Interview Prep!</h1>
     <p>Select a topic from the left to start practicing real interview questions and exercises for Python, SQL, Web, AI, and HR rounds. All content is curated for clarity and relevance.</p>
@@ -36,7 +37,6 @@
 <footer>
   <span class="footer-brand">&copy; 2025 Interview Prep</span> &mdash; Made with <span aria-label="love" class="footer-heart">&#10084;&#65039;</span> for learners
 </footer>
-
 <script>
   // Toggle submenu and update ARIA attributes
   const menuSpans = document.querySelectorAll('.sidebar li > span');
@@ -148,11 +148,20 @@
   const sidebar = document.querySelector('.sidebar');
   const toggleBtn = document.querySelector('.sidebar-toggle');
   const sidebarList = document.getElementById('sidebar-list');
+  const sidebarOverlay = document.querySelector('.sidebar-overlay');
   if (toggleBtn) {
     toggleBtn.addEventListener('click', () => {
       sidebar.classList.toggle('open');
       const expanded = sidebar.classList.contains('open');
       toggleBtn.setAttribute('aria-expanded', expanded);
+      sidebarOverlay.style.display = expanded ? 'block' : 'none';
+    });
+  }
+  if (sidebarOverlay) {
+    sidebarOverlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      toggleBtn.setAttribute('aria-expanded', false);
+      sidebarOverlay.style.display = 'none';
     });
   }
 

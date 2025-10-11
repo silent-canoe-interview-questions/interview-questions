@@ -1,3 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML/CSS/JS Interview Questions</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+</head>
+<body>
+<header>
+  <span class="site-title">Interview Prep <span class="site-title-accent">Dashboard</span></span>
+</header>
+<button class="sidebar-toggle" aria-label="Open menu" aria-expanded="false">
+  <span class="hamburger"></span>
+</button>
+<nav class="sidebar">
+  <ul>
+    <li><a href="oops-all-interview-questions.html">OOP Concepts</a></li>
+    <li><a href="python-all-interview-questions.html">Python Questions</a></li>
+    <li><a href="sql-all-interview-questions.html">SQL Interview Questions</a></li>
+    <li><a href="html-css-js-all-interview-questions.html">HTML, CSS & JS</a></li>
+    <li><a href="hr-all-interview-questions.html">HR & Behavioral</a></li>
+    <li><a href="ai-all-interview-questions.html">AI/Generative-AI</a></li>
+  </ul>
+</nav>
+<main>
 <!-- HTML, CSS & JavaScript Interview Questions -->
 <div class="content">
   <h1>HTML, CSS & JavaScript Interview Questions</h1>
@@ -54,3 +81,29 @@
     </ol>
   </div>
 </div>
+</main>
+<footer>
+  <span class="footer-brand">&copy; 2025 Interview Prep</span>
+</footer>
+<script>
+const sidebar = document.querySelector('.sidebar');
+const toggleBtn = document.querySelector('.sidebar-toggle');
+function handleSidebar() {
+  if (window.innerWidth <= 700) {
+    sidebar.style.transform = sidebar.classList.contains('open') ? 'translateX(0)' : 'translateX(-100%)';
+    toggleBtn.style.display = 'block';
+  } else {
+    sidebar.style.transform = 'none';
+    toggleBtn.style.display = 'none';
+    sidebar.classList.remove('open');
+  }
+}
+window.addEventListener('resize', handleSidebar);
+document.addEventListener('DOMContentLoaded', handleSidebar);
+toggleBtn.addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  handleSidebar();
+});
+</script>
+</body>
+</html>

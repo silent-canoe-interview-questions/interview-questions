@@ -54,15 +54,15 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-  width: 260px;
+  width: 220px;
   height: 100vh;
   background: #fff;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.07);
+  border-right: 1px solid #e2e8f0;
   z-index: 1002;
   transition: transform 0.3s cubic-bezier(.4,0,.2,1);
   display: flex;
   flex-direction: column;
-  padding-top: 70px;
+  padding-top: 60px;
 }
 
 .sidebar ul {
@@ -77,10 +77,10 @@ header {
 
 .sidebar ul li a {
   display: block;
-  padding: 1rem 2rem;
+  padding: 0.8rem 1.2rem;
   color: #2d3748;
   text-decoration: none;
-  font-size: 1.1rem;
+  font-size: 1rem;
   border-bottom: 1px solid #f0f0f0;
   transition: background 0.2s;
 }
@@ -92,13 +92,13 @@ header {
 
 .sidebar-toggle {
   position: absolute;
-  top: 18px;
-  left: 18px;
+  top: 14px;
+  left: 14px;
   background: #38b2ac;
   border: none;
   border-radius: 6px;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   display: none;
   align-items: center;
   justify-content: center;
@@ -106,7 +106,7 @@ header {
   cursor: pointer;
 }
 .hamburger {
-  width: 28px;
+  width: 24px;
   height: 3px;
   background: #fff;
   display: block;
@@ -117,16 +117,15 @@ header {
   content: '';
   position: absolute;
   left: 0;
-  width: 28px;
+  width: 24px;
   height: 3px;
   background: #fff;
-  transition: 0.2s;
 }
 .hamburger::before {
-  top: -9px;
+  top: -7px;
 }
 .hamburger::after {
-  top: 9px;
+  top: 7px;
 }
 
 .sidebar-overlay {
@@ -136,24 +135,25 @@ header {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(45,55,72,0.25);
+  background: rgba(45,55,72,0.18);
   z-index: 1001;
 }
 
 .dashboard {
-  margin-left: 260px;
-  padding: 2rem 2rem 4rem 2rem;
+  margin-left: 220px;
+  padding: 1.5rem 1rem 3rem 1rem;
   min-height: calc(100vh - 60px);
   transition: margin-left 0.3s cubic-bezier(.4,0,.2,1);
 }
 
 .content {
-  max-width: 900px;
+  max-width: 800px;
   margin: 0 auto;
   background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-  padding: 2rem;
+  border-radius: 6px;
+  box-shadow: none;
+  padding: 1.2rem;
+  border: 1px solid #e2e8f0;
 }
 
 .content h1 {
@@ -205,7 +205,7 @@ footer {
   background: #2d3748;
   color: #fff;
   text-align: center;
-  padding: 0.7rem 0;
+  padding: 0.6rem 0;
   font-size: 1rem;
   z-index: 1004;
 }
@@ -215,26 +215,27 @@ footer {
 }
 .footer-heart {
   color: #e53e3e;
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
 /* Responsive styles */
 @media (max-width: 900px) {
   .dashboard {
     margin-left: 0;
-    padding: 1rem 0.5rem 4rem 0.5rem;
+    padding: 1rem 0.5rem 3rem 0.5rem;
   }
   .content {
-    padding: 1.2rem;
+    padding: 1rem;
   }
 }
 @media (max-width: 700px) {
   .sidebar {
     transform: translateX(-100%);
-    width: 80vw;
-    max-width: 340px;
-    box-shadow: 2px 0 12px rgba(0,0,0,0.13);
-    padding-top: 60px;
+    width: 75vw;
+    max-width: 320px;
+    border-right: none;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.10);
+    padding-top: 54px;
   }
   .sidebar.open {
     transform: translateX(0);
@@ -244,7 +245,7 @@ footer {
   }
   .dashboard {
     margin-left: 0;
-    padding: 1rem 0.5rem 4rem 0.5rem;
+    padding: 1rem 0.5rem 3rem 0.5rem;
   }
   .sidebar-overlay {
     display: none;
@@ -255,18 +256,18 @@ footer {
 }
 @media (max-width: 500px) {
   header {
-    font-size: 1.1rem;
-    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    padding: 0.5rem 0.7rem;
   }
   .sidebar ul li a {
-    font-size: 1rem;
-    padding: 0.8rem 1.2rem;
+    font-size: 0.95rem;
+    padding: 0.7rem 1rem;
   }
   .content {
-    padding: 0.7rem;
+    padding: 0.6rem;
   }
   footer {
-    font-size: 0.95rem;
-    padding: 0.5rem 0;
+    font-size: 0.92rem;
+    padding: 0.4rem 0;
   }
 }

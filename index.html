@@ -16,7 +16,6 @@
   <button class="sidebar-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar-list">
     <span class="hamburger"></span>
   </button>
-  <input type="text" id="topicSearch" class="sidebar-search" placeholder="Search topics..." aria-label="Search topics">
   <ul id="sidebar-list" role="menu">
     <li><a href="Pages/oops-all-interview-questions.html" role="menuitem">OOP Concepts</a></li>
     <li><a href="Pages/python-all-interview-questions.html" role="menuitem">Python Questions</a></li>
@@ -162,18 +161,6 @@
       sidebar.classList.remove('open');
       toggleBtn.setAttribute('aria-expanded', false);
       sidebarOverlay.style.display = 'none';
-    });
-  }
-
-  // Search topics
-  const searchBox = document.getElementById('topicSearch');
-  if (searchBox) {
-    searchBox.addEventListener('input', function() {
-      const val = this.value.toLowerCase();
-      Array.from(sidebarList.children).forEach(li => {
-        const text = li.textContent.toLowerCase();
-        li.style.display = text.includes(val) ? '' : 'none';
-      });
     });
   }
 </script>
